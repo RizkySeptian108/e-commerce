@@ -14,25 +14,21 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        {{-- Icons --}}
         <link rel="stylesheet" href="fontawesome-free-6.5.1-web/css/all.min.css">
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            
+    <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-900">
+    
             @include('layouts.navigation')
 
             <main class="flex">
+                
                 <x-sidebar />
 
-                <div class="flex-1 ml-64 p-4">
-                    <x-slot name="header">
-                        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                            {{ __('Dashboard') }}
-                        </h2>
-                    </x-slot>
-                   {{ $slot }} 
+                <div class="flex-1">
+                   @yield('main-page')
                 </div>
             </main>
-        </div>
+        
     </body>
 </html>
