@@ -12,7 +12,10 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.payment.index', [
+            'page_title' => 'Payment Method',
+            'PaymentMethods' => PaymentMethod::all() 
+        ]);
     }
 
     /**
@@ -28,7 +31,13 @@ class PaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'payment_method' => 'required|string|min:3|max:50'
+        ]);
+
+        PaymentMethod::create($validatedData);
+
+        return redirect('payment-method')->with('success', 'new payment method has been successfully added');
     }
 
     /**
@@ -52,7 +61,14 @@ class PaymentMethodController extends Controller
      */
     public function update(Request $request, PaymentMethod $paymentMethod)
     {
-        //
+        $validatedData = $request->validate([
+            'payment_method' => 'required|string|min:3|max:50'
+        ]);
+
+        PaymentMethod::where('id', $paymentMethod->id)
+                        ->update($validatedData);
+
+        return redirect('payment-method')->with('success', 'payment method ' . $paymentMethod->payment_method . ' is successfully change to ' . $request->payment_method);
     }
 
     /**
@@ -60,6 +76,8 @@ class PaymentMethodController extends Controller
      */
     public function destroy(PaymentMethod $paymentMethod)
     {
-        //
+        PaymentMethod::destroy($paymentMethod->id);
+
+        return redirect('payment-method')->with('success', 'payment method ' . $paymentMethod->payment_method . 'is successfully deleted');
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 
 // Admin
-Route::get('/category', [CategoryController::class, 'index'])->middleware(['auth', 'verified'])->name('category');
+Route::middleware('auth', 'verified')->group(function() {
+    Route::resource('/category', CategoryController::class);
+    Route::resource('/payment-method', PaymentMethodController::class);
+});
 
 // Profile management
 Route::middleware('auth')->group(function () {

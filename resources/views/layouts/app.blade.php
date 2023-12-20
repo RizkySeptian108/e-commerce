@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name') .' | '. $page_title }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         {{-- Icons --}}
-        <link rel="stylesheet" href="fontawesome-free-6.5.1-web/css/all.min.css">
+        <link rel="stylesheet" href="{{ asset('fontawesome-free-6.5.1-web/css/all.min.css') }}">
     </head>
     <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-900">
     
@@ -25,7 +25,7 @@
                 
                 <x-sidebar />
 
-                <div class="flex-1">
+                <div class="flex-1 p-6">
                    @yield('main-page')
                 </div>
             </main>
