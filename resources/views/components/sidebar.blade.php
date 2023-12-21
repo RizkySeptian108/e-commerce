@@ -18,5 +18,13 @@
     <x-nav-link page="Payment Method" link="{{ route('payment-method.index') }}">
         <i class="fa-regular fa-credit-card"></i>
     </x-nav-link>
+    {{-- Shipment method --}}
+    <x-nav-link page="Shipment Method" link="{{ route('shipment-method.index') }}">
+        <i class="fa-solid fa-truck"></i>
+    </x-nav-link>
+    {{-- Access --}}
+    <x-nav-link page="Access" link="{{ route('access.index') }}">
+        <i class="fa-solid fa-lock"></i>
+    </x-nav-link>
 
 </nav>

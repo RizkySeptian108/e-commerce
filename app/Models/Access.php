@@ -5,8 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ShipmentMethod extends Model
+class Access extends Model
 {
     use HasFactory;
-    protected $fillable = ['shipment_method'];
+
+    protected $table = 'access';
+
+    protected $fillable = ['access_type'];
 }

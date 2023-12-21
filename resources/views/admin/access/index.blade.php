@@ -16,14 +16,14 @@
             <x-dropdown align="left" width="fit">
                 <x-slot name="trigger">
                     <x-primary-button class="bg-gray-700 text-white hover:bg-gray-600" type="button">
-                        Add Payment Method
+                        Add Access Type
                     </x-primary-button>
                 </x-slot>
                 <x-slot name="content">
-                    <form action="payment-method" method="POST" class="p-3">
+                    <form action="access" method="POST" class="p-3">
                         @csrf
-                        <x-input-label for="payment_method" >
-                            <input type="text" name="payment_method" id="payment_method" placeholder="insert payment_method" class="rounded-md border-slate-500">
+                        <x-input-label for="access_type" >
+                            <input type="text" name="access_type" id="access_type" placeholder="insert access type" class="rounded-md border-slate-500">
                         </x-input-label>
                         <x-primary-button type="submit" class="mt-2">
                             submit
@@ -31,7 +31,7 @@
                     </form>
                 </x-slot>
             </x-dropdown>
-            @error('payment_method')  
+            @error('access_type')  
                 <x-input-error :messages="$message" class="mt-2 "></x-input-error>
             @enderror
         </div>
@@ -41,28 +41,28 @@
                 <thead>
                     <tr class="bg-slate-400 text-white font-semibold">
                         <th class="border border-slate-500 px-2 py-1 text-center">no</th>
-                        <th class="border border-slate-500 px-28 py-1">shipment method</th>
+                        <th class="border border-slate-500 px-28 py-1">access type</th>
                         <th class="border border-slate-500 px-2 py-1">action</th>
                     </tr>
                 </thead>
                 <tbody x-data="{update: null}">
-                    @foreach ($PaymentMethods as $PaymentMethod)
+                    @foreach ($access as $a)
                         <tr>
                             <td class="border border-slate-500 px-2 py-1 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-slate-500 px-2 py-1">
-                                <span :class="update === {{ $PaymentMethod->id }} ? 'hidden' : ''" >
-                                    {{ $PaymentMethod->payment_method }}
+                                <span :class="update === {{ $a->id }} ? 'hidden' : ''" >
+                                    {{ $a->access_type }}
                                 </span>
-                                <form action="{{ route('payment-method.update', $PaymentMethod) }}" :class="update === {{ $PaymentMethod->id }} ? 'block' : 'hidden'" method="POST">
+                                <form action="{{ route('access.update', $a) }}" :class="update === {{ $a->id }} ? 'block' : 'hidden'" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <input type="text" name="payment_method" value="{{ $PaymentMethod->payment_method }}" class="p-1 rounded-md border-slate-400 focus:ring-blue-200">
+                                    <input type="text" name="access_type" value="{{ $a->access_type }}" class="p-1 rounded-md border-slate-400 focus:ring-blue-200">
                                     <x-primary-button type="submit">submit</x-primary-button>
                                 </form>
                             </td>
                             <td class="border border-slate-500 px-2 py-1 text-center">
-                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update === {{ $PaymentMethod->id }} ? update = null : update = {{ $PaymentMethod->id }}"></i>
-                                <form action="{{ route('payment-method.destroy', $PaymentMethod) }}" method="POST" class="inline">
+                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update === {{ $a->id }} ? update = null : update = {{ $a->id }}"></i>
+                                <form action="{{ route('access.destroy', $a) }}" method="POST" class="inline">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" onclick="return confirm('are you sure?')">

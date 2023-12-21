@@ -1,10 +1,13 @@
 <?php
 
+use App\Models\Access;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccessController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentMethodController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ShipmentMethodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +33,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::middleware('auth', 'verified')->group(function() {
     Route::resource('/category', CategoryController::class);
     Route::resource('/payment-method', PaymentMethodController::class);
+    Route::resource('/shipment-method', ShipmentMethodController::class);
+    Route::resource('/access', AccessController::class);
 });
 
 // Profile management

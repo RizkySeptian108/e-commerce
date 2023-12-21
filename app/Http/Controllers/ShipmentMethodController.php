@@ -12,7 +12,10 @@ class ShipmentMethodController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.shipment.index', [
+            'page_title' => 'Shipment Method',
+            'shipmentMethods' => ShipmentMethod::all() 
+        ]);
     }
 
     /**
@@ -28,7 +31,13 @@ class ShipmentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'shipment_method' => 'required|string|min:3|max:50'
+        ]);
+
+        ShipmentMethod::create($validatedData);
+
+        return redirect('shipment-method')->with('success', 'new shipment method has been successfully added');
     }
 
     /**
@@ -52,7 +61,14 @@ class ShipmentMethodController extends Controller
      */
     public function update(Request $request, ShipmentMethod $shipmentMethod)
     {
-        //
+        $validatedData = $request->validate([
+            'shipment_method' => 'required|string|min:3|max:50'
+        ]);
+
+        ShipmentMethod::where('id', $shipmentMethod->id)
+                        ->update($validatedData);
+
+        return redirect('shipment-method')->with('success', 'shipment method ' . $shipmentMethod->shipment_method . ' is successfully change to ' . $request->shipment_method); 
     }
 
     /**
@@ -60,6 +76,8 @@ class ShipmentMethodController extends Controller
      */
     public function destroy(ShipmentMethod $shipmentMethod)
     {
-        //
+        ShipmentMethod::destroy($shipmentMethod->id);
+
+        return redirect('shipment-method')->with('success', 'shipment method ' . $shipmentMethod->shipment_method . 'is successfully deleted');
     }
 }
