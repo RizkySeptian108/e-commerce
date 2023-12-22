@@ -30,7 +30,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 
 
 // Admin
-Route::middleware('auth', 'verified')->group(function() {
+Route::middleware('auth', 'verified', 'isAdmin')->group(function() {
     Route::resource('/category', CategoryController::class);
     Route::resource('/payment-method', PaymentMethodController::class);
     Route::resource('/shipment-method', ShipmentMethodController::class);
