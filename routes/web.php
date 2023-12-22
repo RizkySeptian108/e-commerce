@@ -35,6 +35,7 @@ Route::middleware('auth', 'verified')->group(function() {
     Route::resource('/payment-method', PaymentMethodController::class);
     Route::resource('/shipment-method', ShipmentMethodController::class);
     Route::resource('/access', AccessController::class);
+    Route::post('/access/account-access/{user:id}', [AccessController::class, 'accountAccess'])->name('account-access');
 });
 
 // Profile management

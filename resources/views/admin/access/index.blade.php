@@ -75,5 +75,49 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="mt-4">
+            <h2 class="text-2xl font-semibold">Account Access</h2>
+            @error('access_id')  
+                <x-input-error :messages="$message" class="mt-2 "></x-input-error>
+            @enderror
+            <table class="mt-2 border border-slate-500">
+                <thead>
+                    <tr class="bg-slate-400">
+                        <th class="border border-slate-500 px-2 py-1">no</th>
+                        <th class="border border-slate-500 px-2 py-1">name</th>
+                        <th class="border border-slate-500 px-2 py-1">username</th>
+                        <th class="border border-slate-500 px-2 py-1">email</th>
+                        <th class="border border-slate-500 px-2 py-1">access type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($accounts as $account)  
+                        <tr class="">
+                            <td class="border border-slate-500 px-2 py-1">{{ $loop->iteration }}</td>
+                            <td class="border border-slate-500 px-2 py-1">{{ $account->name }}</td>
+                            <td class="border border-slate-500 px-2 py-1">{{ $account->username }}</td>
+                            <td class="border border-slate-500 px-2 py-1">{{ $account->email }}</td>
+                            <td class="border border-slate-500 px-2 py-1">
+                                <form action="{{ route('account-access', $account->id ) }}" method="POST">
+                                    @csrf
+                                    <select name="access_id" id="access_id" class="rounded-sm">
+                                        @foreach ($access as $a)
+                                            <option value="{{ $a->id }}" 
+                                                @if ($account->access_id === $a->id)
+                                                    selected
+                                                @endif class="rounded-b-md ">
+                                                {{ $a->access_type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <x-primary-button type="submit">submit</x-button-primary>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection

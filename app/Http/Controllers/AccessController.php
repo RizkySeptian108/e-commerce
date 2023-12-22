@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Access;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class AccessController extends Controller
 {
@@ -15,7 +16,8 @@ class AccessController extends Controller
     {
         return view('admin.access.index', [
             'page_title' => 'Access',
-            'access' => Access::all() 
+            'access' => Access::all(), 
+            'accounts' => User::select('id','name', 'username', 'email','access_id')->get(),
         ]);
     }
 
@@ -80,5 +82,19 @@ class AccessController extends Controller
         Access::destroy($access->id);
 
         return redirect('access')->with('success', 'access type ' . $access->access_type . ' is successfully deleted');
+    }
+
+    public function accountAccess(Request $request, User $user)
+    {
+        $validatedData = $request->validate([
+            'access_id' => 'int|required|exists:access,id'
+        ]);
+
+        User::where('id', $user->id)
+                    ->update($validatedData);
+        
+        $userNew = User::with('access')->find($user->id);
+        
+        return redirect('access')->with('success', 'access type for user '. $user->username .' is successfully change to '. $userNew->access->access_type);        
     }
 }
