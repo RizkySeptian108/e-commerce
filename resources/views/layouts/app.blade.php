@@ -22,8 +22,9 @@
             @include('layouts.navigation')
 
             <main class="flex">
-                
-                <x-sidebar />
+                @if(!isset($sidebar))
+                    <x-sidebar />
+                @endif
 
                 <div class="flex-1 p-6">
                    @yield('main-page')

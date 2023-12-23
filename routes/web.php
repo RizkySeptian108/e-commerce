@@ -6,6 +6,7 @@ use App\Http\Controllers\AccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KioskController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ShipmentMethodController;
 
@@ -28,6 +29,7 @@ Route::get('/', function () {
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+// 
 
 // Admin
 Route::middleware('auth', 'verified', 'isAdmin')->group(function() {
@@ -43,6 +45,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Buyer
+Route::middleware('auth')->group(function() {
+    // create a kiosk
+    Route::resource('/kiosk', KioskController::class);
 });
 
 require __DIR__.'/auth.php';

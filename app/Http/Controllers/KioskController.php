@@ -13,7 +13,7 @@ class KioskController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -21,7 +21,10 @@ class KioskController extends Controller
      */
     public function create()
     {
-        //
+        return view('kiosk.create-kiosk.index', [
+            'page_title' => 'Create Kiosk',
+            'sidebar' => true
+        ]);
     }
 
     /**
@@ -29,7 +32,7 @@ class KioskController extends Controller
      */
     public function store(StoreKioskRequest $request)
     {
-        //
+        return $request;
     }
 
     /**
