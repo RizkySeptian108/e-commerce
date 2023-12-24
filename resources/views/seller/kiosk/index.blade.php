@@ -9,17 +9,17 @@
             </div>
             <div class="flex-1 md:border-l-2 md:border-l-slate-300 p-4">
                 <p class="">Hai, <span class="font-semibold">{{ Auth::user()->username }}</span> please fill your kiosk information detail!</p>
-                <form action="{{ route('kiosk.store') }}" method="post" class="">
+                <form action="{{ route('kiosk.store') }}" method="POST" class="" enctype="multipart/form-data">
                     @csrf
                     <x-input-label value="Kiosk Name :" for="kiosk_name" />
-                    <x-text-input id="kiosk_name" id="kiosk_name" class="w-1/2" />
+                    <x-text-input id="kiosk_name" id="kiosk_name" class="w-1/2" name="kiosk_name" />
                     <x-input-error :messages="$errors->first('kiosk_name')" />
                     <x-input-label value="Kiosk Description :" for="kiosk_description" class="mt-2"/>
                     <textarea name="kiosk_description" id="kiosk_description" cols="30" rows="3" class="border-slate-300 rounded-md"></textarea>
                     <x-input-error :messages="$errors->first('kiosk_description')" />
                     <x-input-label value="Kiosk Logo :" for="kiosk_logo" class="mt-2" />
                     <input class="w-1/2 bg-gray-200 border border-slate-300 rounded-md file:bg-slate-800 file:border-none file:text-white file:p-1" id="kiosk_logo" type="file" name="kiosk_logo">
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="kiosk_logo_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="kiosk_logo_help">SVG, PNG, JPG or GIF (MAX 2mb).</p>
                     <x-input-error :messages="$errors->first('kiosk_logo')" />
                     <x-primary-button class="mt-4">submit</x-primary-button>
                 </form>

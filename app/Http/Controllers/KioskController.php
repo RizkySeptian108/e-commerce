@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kiosk;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreKioskRequest;
 use App\Http\Requests\UpdateKioskRequest;
 
@@ -21,7 +22,7 @@ class KioskController extends Controller
      */
     public function create()
     {
-        return view('kiosk.create-kiosk.index', [
+        return view('seller.kiosk.index', [
             'page_title' => 'Create Kiosk',
             'sidebar' => true
         ]);
@@ -32,7 +33,13 @@ class KioskController extends Controller
      */
     public function store(StoreKioskRequest $request)
     {
-        return $request;
+        $validatedData = $request->validated();
+        if($request->file('kiosk_logo')){
+            $validatedData['kiosk_logo'] = $request->file('kiosk_logo')->store('kiosk-logo');
+        }
+        $validatedData['user_id'] = Auth::user()->id;
+        Kiosk::create($validatedData);
+        return redirect('/dashboard')->with('success', 'Your kiosk is successfully created');
     }
 
     /**
@@ -48,7 +55,9 @@ class KioskController extends Controller
      */
     public function edit(Kiosk $kiosk)
     {
-        //
+        return view('seller.kiosk.edit', [
+            'page_title' => 'Kiosk Profile',
+        ]);
     }
 
     /**

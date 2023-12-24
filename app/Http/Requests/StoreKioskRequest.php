@@ -13,9 +13,6 @@ class StoreKioskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // if(Auth::user()->email_verify_at && Auth::user()->address){
-        //     return true;
-        // }
         return true;
     }
 
@@ -29,7 +26,7 @@ class StoreKioskRequest extends FormRequest
         return [
             'kiosk_name' => 'required|max:50|min:3|string|unique:kiosks,kiosk_name',
             'kiosk_description' => ['required','max:500','string', new MaxWords(100)],
-            'kiosk_logo' => 'image', 'size:2048'
+            'kiosk_logo' => 'image|max:2048'
         ];
     }
 }

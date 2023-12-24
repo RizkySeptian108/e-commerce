@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('kiosks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('kiosk_name');
             $table->text('kiosk_description');
             $table->string('kiosk_logo');
