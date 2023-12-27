@@ -22,6 +22,22 @@
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
+        <div>
+            <x-input-label for="phone" :value="__('Phone')" />
+            <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $user->phone)" autocomplete="phone" />
+            <span class="font-extralight text-sm mt-2 text-slate-600">use +62 format for phone number</span>
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+        </div>
+        <div>
+            <x-input-label for="address" :value="__('Address')" />
+            <textarea name="address" id="address" cols="30" rows="2" class="mt-1 block w-full border border-slate-300 rounded-md">{{ old('address', $user->address) }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        </div>
+        <div>
+            <x-input-label for="bank_account" :value="__('Bank Account')" />
+            <x-text-input id="bank_account" name="bank_account" type="number" class="mt-1 block w-full" :value="old('bank_account', $user->bank_account)" />
+            <x-input-error class="mt-2" :messages="$errors->get('bank_account')" />
+        </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
