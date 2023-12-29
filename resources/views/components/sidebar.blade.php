@@ -7,6 +7,9 @@
     <x-nav-link page="Dashboard" link="{{ route('dashboard') }}">
         <i class="fa-solid fa-house"></i>
     </x-nav-link>
+    <x-nav-link page="Product" link="{{ route('product.index') }}">
+        <i class="fa-solid fa-boxes-packing"></i>
+    </x-nav-link>
 
     @if (Auth::user()->access_id === 1)    
         {{-- Admin exclusive menu --}}

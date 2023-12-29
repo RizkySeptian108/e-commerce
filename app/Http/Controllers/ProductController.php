@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -12,7 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return view('seller.product.index',[
+            'page_title' => 'Products',
+        ]);
     }
 
     /**
@@ -20,15 +25,25 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('seller.product.create', [
+            'page_title' => 'Add Product',
+            'categories' => Category::all()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        if($request->file('product_picture')){
+            $validatedData['product_picture'] = $request->file('product_picture')->store('product-picture', 'public');
+        }
+        $validatedData['kiosk_id'] = Auth::user()->kiosk->id;
+        Product::create($validatedData);
+        return redirect(route('product.index'))->with('success', 'New product has been save!');
     }
 
     /**

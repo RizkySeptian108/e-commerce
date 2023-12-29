@@ -16,7 +16,7 @@
         @csrf
     </form>
 
-    <form method="POST" action="{{ route('kiosk.update', $kiosk) }}" class="mt-6 space-y-6 w-1/2" enctype="multipart/form-data" x-data="{image: null}">
+    <form method="POST" action="{{ route('kiosk.update', $kiosk) }}" class="mt-6 space-y-6 md:w-1/2" enctype="multipart/form-data" x-data="{image: null}">
         @csrf
         @method('patch')
 

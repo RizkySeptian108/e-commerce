@@ -8,7 +8,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KioskController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShipmentMethodController;
+use App\Models\Kiosk;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -40,17 +43,22 @@ Route::middleware('auth', 'verified', 'isAdmin')->group(function() {
     Route::post('/access/account-access/{user:id}', [AccessController::class, 'accountAccess'])->name('account-access');
 });
 
-// Profile management
+// Buyer
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::middleware('verified')->group(function() {
+        // create a kiosk
+        Route::resource('/kiosk', KioskController::class)->only('create');
+    });
 });
 
-// Buyer
-Route::middleware('auth')->group(function() {
-    // create a kiosk
-    Route::resource('/kiosk', KioskController::class);
+// Kiosk
+Route::middleware('auth', 'verified', 'isKiosk')->group(function() {
+    Route::resource('/kiosk', KioskController::class)->except('create');
+    Route::resource('/product', ProductController::class);
 });
 
 require __DIR__.'/auth.php';
