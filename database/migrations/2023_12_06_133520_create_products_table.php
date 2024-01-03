@@ -19,6 +19,7 @@ return new class extends Migration
             $table->char('unit');
             $table->integer('price_per_unit');
             $table->text('description');
+            $table->string('product_picture');
             $table->foreignId('kiosk_id');
             $table->timestamps();
         });

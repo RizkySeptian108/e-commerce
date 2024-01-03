@@ -15,7 +15,7 @@
             {{-- search input bar --}}
             <div class="my-auto w-1/2">
                 <form method="POST" action="" class="relative">
-                    <x-text-input placeholder="insert item name" class="w-full rounded-3xl" />
+                    <x-text-input placeholder="insert item name" class="w-full rounded-s-3xl rounded-e-3xl" />
                     <button type="submit" class="absolute right-3 bottom-2"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
                 </form>
             </div>

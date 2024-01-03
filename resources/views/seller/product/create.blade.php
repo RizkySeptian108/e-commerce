@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('main-page')
-@if ($errors)
-    @foreach ($errors->all() as $error)
-        
-    <div>{{ $errors }}</div> 
-    @endforeach
-@endif
     <x-title class="mb-4">{{ $page_title }}</x-title>
     <div class="p-4 bg-white rounded-md">
         <form action="{{ route('product.store') }}" method="post" class="md:w-1/2" enctype="multipart/form-data">
