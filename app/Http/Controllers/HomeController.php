@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if($request->category){
-            
-        }
-
         return view('home', [
             'page_title' => 'Home',
             'sidebar' => true,
-            'products' => Product::paginate(18)
+            'categories' => Category::all(),
+            'products' => Product::latest()->filter(request(['search', 'category', 'kiosk']))->paginate(12)
         ]);       
+    }
+
+    public function product(Product $product)
+    {
+        return view('home-product', [
+            'page_title' => $product->product_name,
+            'product' => $product,
+            'sidebar' => true
+        ]);
     }
 }

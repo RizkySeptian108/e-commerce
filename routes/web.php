@@ -26,6 +26,7 @@ use App\Models\Kiosk;
 
 // Home Page
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home/{product}', [HomeController::class, 'product'])->name('home-product');
 
 
 // Dashboard

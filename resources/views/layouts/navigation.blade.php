@@ -14,8 +14,18 @@
             
             {{-- search input bar --}}
             <div class="my-auto w-1/2">
-                <form method="POST" action="" class="relative">
-                    <x-text-input placeholder="insert item name" class="w-full rounded-s-3xl rounded-e-3xl" />
+                <form method="GET" action="{{ route('home') }}" class="relative">
+                    @csrf
+                    
+                    @if (request('category'))
+                        <input type="hidden" name="category" value="{{ request('category') }}">
+                    @endif
+
+                    @if (request('kiosk'))
+                        <input type="hidden" name="kiosk" value="{{ request('kiosk') }}">
+                    @endif
+
+                    <x-text-input name="search" placeholder="insert item name" class="w-full rounded-s-3xl rounded-e-3xl" />
                     <button type="submit" class="absolute right-3 bottom-2"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
                 </form>
             </div>
@@ -50,7 +60,7 @@
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-
+                                @method('delete')
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
                                                     this.closest('form').submit();">
