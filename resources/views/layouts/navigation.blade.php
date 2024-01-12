@@ -33,6 +33,25 @@
             @if (Auth::user())
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
+
+                    {{-- cartdropdown --}}
+                    <x-dropdown align="rigth">
+                        <x-slot name="trigger">
+                            <button class="text-slate-600 relative mr-4">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <p class="bg-red-600 text-sm text-white rounded-md text-[12px] absolute w-fit px-1 -bottom-2 left-3">1</p>
+                            </button>
+                        </x-slot>
+                        <x-slot name="content" class="w-60">
+                            <div class="p-2 flex gap-2">
+                                <img src="{{ asset('storage/'. $product->product_picture) }}" alt="" class="w-14 h-14">
+                                <p>assjjj ccjcjcc ssasasaas</p>
+                                <p>1 x Rp 1.000.000</p>
+                            </div>
+                        </x-slot>
+                    </x-dropdown>
+
+                    {{-- Account dropdown --}}
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
@@ -60,7 +79,7 @@
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                @method('delete')
+                                @method('POST')
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
                                                     this.closest('form').submit();">

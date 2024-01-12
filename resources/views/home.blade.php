@@ -4,9 +4,9 @@
     <div class="bg-white rounded-md md:mx-12 p-3">
         <x-slideshow />
 
-        <div class="mt-4 flex gap-2 overflow-x-scroll p-2">
+        <div class="mt-4 p-2 flex gap-2 w-full">
             @foreach ($categories as $category)
-                <a class="bg-purple-700 p-3 rounded-full text-center font-bold font-sans text-white block w-fit bg-gradient-to-tr from-purple-400 
+                <a class="bg-purple-700 md:p-3 p-2 rounded-full text-center font-bold font-sans text-white  w-fit bg-gradient-to-tr from-purple-400
                    @if(request('category') === $category->id) underline underline-offset-2 @endif"  
                    href="{{ route('home', ['category' => $category->id]) }}"
                    >

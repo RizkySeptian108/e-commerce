@@ -3,6 +3,7 @@
 use App\Models\Access;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -53,8 +54,12 @@ Route::middleware('auth')->group(function () {
         // create a kiosk
         Route::resource('/kiosk', KioskController::class)->only('create');
     });
+
+    Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
+    Route::get('/cart', [CartController::class, 'shows']);
 });
 
+// create data in cart
 // Kiosk
 Route::middleware('auth', 'verified', 'isKiosk')->group(function() {
     Route::resource('/kiosk', KioskController::class)->except('create');
