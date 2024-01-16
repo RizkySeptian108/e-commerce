@@ -55,11 +55,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('/kiosk', KioskController::class)->only('create');
     });
 
+    // create data in cart
     Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
-    Route::get('/cart', [CartController::class, 'shows']);
+    Route::get('/cart', [CartController::class, 'shows'])->name('cart.shows');
+    Route::get('/carts', [CartController::class, 'index'])->name('cart.index');
 });
 
-// create data in cart
 // Kiosk
 Route::middleware('auth', 'verified', 'isKiosk')->group(function() {
     Route::resource('/kiosk', KioskController::class)->except('create');

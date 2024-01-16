@@ -32,21 +32,37 @@
 
             @if (Auth::user())
                 <!-- Settings Dropdown -->
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="hidden sm:flex sm:items-center sm:ms-6" 
+                
+                x-data="{ carts: []}" x-init="carts = fetch(`{{ route('cart.shows', ['user_id' => Auth::user()->id ]) }}`).then(response => response.json()).then(data => data.carts).then(cartsData => carts = cartsData)"
+                
+                >
 
                     {{-- cartdropdown --}}
-                    <x-dropdown align="rigth">
+                    <x-dropdown align="rigth" width="w-80" >
                         <x-slot name="trigger">
                             <button class="text-slate-600 relative mr-4">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <p class="bg-red-600 text-sm text-white rounded-md text-[12px] absolute w-fit px-1 -bottom-2 left-3">1</p>
+                                <p class="bg-red-600 text-sm text-white rounded-md text-[12px] absolute w-fit px-1 -bottom-2 left-3" x-show="carts.length > 1" x-text="carts.length"></p>
                             </button>
                         </x-slot>
-                        <x-slot name="content" class="w-60">
-                            <div class="p-2 flex gap-2">
-                                <img src="{{ asset('storage/'. $product->product_picture) }}" alt="" class="w-14 h-14">
-                                <p>assjjj ccjcjcc ssasasaas</p>
-                                <p>1 x Rp 1.000.000</p>
+                        <x-slot name="content" >
+                            <div>
+                                <template x-for="cart in carts">
+                                    <div class="p-2 flex gap-2 items-center justify-between">
+                                        <img :src="`{{ asset('storage/') }}/${cart.product.product_picture}`" alt="" class="w-14 h-14">
+                                        <div class="flex-grow text-left">
+                                            <p x-text="cart.product.product_name" class="font-bold uppercase"></p>
+                                            <p class="text-sm"><span x-text="cart.qty" class="mr-1"></span><span x-text="cart.product.unit"></span></p>
+                                        </div>
+                                        <p x-text="(cart.qty * cart.product.price_per_unit).toLocaleString('id-ID', {style: 'currency', currency: 'IDR', minimumFractionDigits: 0}) " class="text-right text-sm font-semibold text-lime-500"></p>
+                                    </div>
+                                </template>
+                                <div class="w-full px-2 flex justify-end">
+                                    <form action="">
+                                        <x-primary-button>Buy</x-primary-button>
+                                    </form>
+                                </div>
                             </div>
                         </x-slot>
                     </x-dropdown>
@@ -148,3 +164,4 @@
         </div>
     </div>
 </nav>
+

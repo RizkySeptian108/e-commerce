@@ -21,7 +21,14 @@ class CartController extends Controller
             'product_id' => $product->id
         ];
 
-        Cart::create($data);
+        $cart = Cart::where(['user_id' => Auth::user()->id, 'product_id' => $product->id])->first();
+
+        if($cart){
+            Cart::where(['user_id' => Auth::user()->id, 'product_id' => $product->id])
+                    ->update(['qty' => $cart->qty + $data['qty']]);
+        }else{
+            Cart::create($data);
+        }
         
         return redirect(route('home-product', ['product' => $product->id]));
     }
@@ -30,6 +37,6 @@ class CartController extends Controller
     {
         $data = Cart::where('user_id', $request->user_id)->with(['product'])->get();
 
-        return response()->json(['data' => $data]);
+        return response()->json(['carts' => $data]);
     }
 }
