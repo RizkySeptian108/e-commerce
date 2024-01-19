@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700  w-full sticky z-10 top-0">
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700  w-full sticky z-10 top-0 shadow">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -38,6 +38,8 @@
                 
                 >
 
+
+
                     {{-- cartdropdown --}}
                     <x-dropdown align="rigth" width="w-80" >
                         <x-slot name="trigger">
@@ -59,7 +61,7 @@
                                     </div>
                                 </template>
                                 <div class="w-full px-2 flex justify-end">
-                                    <form action="">
+                                    <form action="{{ route('cart.index') }}" method="GET">
                                         <x-primary-button>Buy</x-primary-button>
                                     </form>
                                 </div>
@@ -86,10 +88,14 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
-                            @if (Auth::user()->kiosk)
+                            @if (isset(Auth::user()->kiosk))
                                 <x-dropdown-link :href="route('kiosk.edit', Auth::user()->kiosk->id)">
                                     {{ __('Kiosk Profile') }}
                                 </x-dropdown-link>
+                            @else
+                            <x-dropdown-link :href="route('kiosk.create')">
+                                {{ __('Create Kiosk') }}
+                            </x-dropdown-link>
                             @endif
 
                             <!-- Authentication -->

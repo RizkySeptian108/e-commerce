@@ -53,6 +53,8 @@ class ProductController extends Controller
 
         if($request->file('product_picture')){
             $validatedData['product_picture'] = $request->file('product_picture')->store('product-picture', 'public');
+        }else{
+            $validatedData['product_picture'] = 'product-picture/default.jpg';
         }
         $validatedData['kiosk_id'] = Auth::user()->kiosk->id;
         Product::create($validatedData);

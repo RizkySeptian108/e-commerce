@@ -37,6 +37,8 @@ class KioskController extends Controller
         $validatedData = $request->validated();
         if($request->file('kiosk_logo')){
             $validatedData['kiosk_logo'] = $request->file('kiosk_logo')->store('kiosk-logo', 'public');
+        }else{
+            $validatedData['kiosk_logo'] = 'kiosk-logo/default.jpg';
         }
         $validatedData['user_id'] = Auth::user()->id;
         Kiosk::create($validatedData);

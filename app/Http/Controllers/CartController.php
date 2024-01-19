@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+
+    public function index()
+    {
+        return view('cart', [
+            'page_title' => 'Cart',
+            'sidebar' => true,
+            'carts' => Cart::where('user_id', Auth::user()->id)->with(['product:id,product_name,product_picture,price_per_unit,unit,kiosk_id,qty' => [
+                'kiosk:id,kiosk_name',
+            ]])->get(),
+        ]);
+    }
+
     public function store(Product $product, Request $request)
     {
         $request->validate([

@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KioskController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShipmentMethodController;
@@ -52,18 +53,22 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('verified')->group(function() {
         // create a kiosk
-        Route::resource('/kiosk', KioskController::class)->only('create');
+        Route::resource('/kiosk', KioskController::class)->only('create','store');
+
+        // Order route
+        Route::resource('/order', OrderController::class);
     });
 
     // create data in cart
     Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
     Route::get('/cart', [CartController::class, 'shows'])->name('cart.shows');
     Route::get('/carts', [CartController::class, 'index'])->name('cart.index');
+
 });
 
 // Kiosk
 Route::middleware('auth', 'verified', 'isKiosk')->group(function() {
-    Route::resource('/kiosk', KioskController::class)->except('create');
+    Route::resource('/kiosk', KioskController::class)->except('create', 'store');
     Route::resource('/product', ProductController::class);
 });
 
