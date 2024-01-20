@@ -15,7 +15,7 @@
                 @php
                 $previousKiosk = null;
                 @endphp
-                
+            
                 @foreach ($carts as $cart)
                     @if ($cart->product->kiosk->id !== $previousKiosk)
                         @if ($previousKiosk !== null)
@@ -48,6 +48,7 @@
                         $previousKiosk = $cart->product->kiosk->id;
                     @endphp
                 @endforeach
+            
                 
                 @if (count($carts) > 0)
                     </div> <!-- Close the last container if there are items -->
