@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('product_id')->constrained();
-            $table->smallInteger('qty');
-            $table->integer('total_price');
+            $table->foreignId('kiosk_id');
+            $table->text('address');
+            $table->integer('total_price')->nullable();
             $table->foreignId('payment_method');
             $table->foreignId('shipment_method');
             $table->boolean('is_confirm');

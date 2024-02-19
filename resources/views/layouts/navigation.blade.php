@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
@@ -38,8 +38,6 @@
                 
                 >
 
-
-
                     {{-- cartdropdown --}}
                     <x-dropdown align="rigth" width="w-80" >
                         <x-slot name="trigger">
@@ -49,7 +47,7 @@
                             </button>
                         </x-slot>
                         <x-slot name="content" >
-                            <div>
+                            <div class="overflow-y-auto max-h-72">
                                 <template x-for="cart in carts">
                                     <div class="p-2 flex gap-2 items-center justify-between">
                                         <img :src="`{{ asset('storage/') }}/${cart.product.product_picture}`" alt="" class="w-14 h-14">
@@ -60,10 +58,13 @@
                                         <p x-text="(cart.qty * cart.product.price_per_unit).toLocaleString('id-ID', {style: 'currency', currency: 'IDR', minimumFractionDigits: 0}) " class="text-right text-sm font-semibold text-lime-500"></p>
                                     </div>
                                 </template>
-                                <div class="w-full px-2 flex justify-end">
+                                <div x-show="carts.length > 0" class="w-full px-2 flex justify-end">
                                     <form action="{{ route('cart.index') }}" method="GET">
                                         <x-primary-button>Buy</x-primary-button>
                                     </form>
+                                </div>
+                                <div>
+                                    
                                 </div>
                             </div>
                         </x-slot>

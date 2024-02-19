@@ -29,7 +29,7 @@ class Product extends Model
 
     public function kiosk():BelongsTo
     {
-        return $this->belongsTo(Kiosk::class);
+        return $this->belongsTo(Kiosk::class)->orderBy('kiosk_name');
     }
 
     public function scopeFilter(Builder $query, array $filter ): void

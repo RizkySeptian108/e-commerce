@@ -25,4 +25,9 @@ class Kiosk extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function cart():HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

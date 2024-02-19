@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
 
     // create data in cart
     Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
+    Route::post('/cart/cart-delete/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::get('/cart', [CartController::class, 'shows'])->name('cart.shows');
     Route::get('/carts', [CartController::class, 'index'])->name('cart.index');
 

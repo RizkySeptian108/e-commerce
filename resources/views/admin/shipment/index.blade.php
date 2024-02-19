@@ -24,6 +24,7 @@
                         @csrf
                         <x-input-label for="shipment_method" >
                             <input type="text" name="shipment_method" id="shipment_method" placeholder="insert shipment method" class="rounded-md border-slate-500">
+                            <input type="text" name="price" id="price" placeholder="insert price" class="rounded-md border-slate-500">
                         </x-input-label>
                         <x-primary-button type="submit" class="mt-2">
                             submit
@@ -42,6 +43,7 @@
                     <tr class="bg-slate-400 text-white font-semibold">
                         <th class="border border-slate-500 px-2 py-1 text-center">no</th>
                         <th class="border border-slate-500 px-28 py-1">shipment method</th>
+                        <th class="border border-slate-500 px-28 py-1">price</th>
                         <th class="border border-slate-500 px-2 py-1">action</th>
                     </tr>
                 </thead>
@@ -59,6 +61,9 @@
                                     <input type="text" name="shipment_method" value="{{ $shipmentMethod->shipment_method }}" class="p-1 rounded-md border-slate-400 focus:ring-blue-200">
                                     <x-primary-button type="submit">submit</x-primary-button>
                                 </form>
+                            </td>
+                            <td class="border border-slate-500 px-2 py-1 text-center">
+                                {{ $shipmentMethod->price }}
                             </td>
                             <td class="border border-slate-500 px-2 py-1 text-center">
                                 <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update === {{ $shipmentMethod->id }} ? update = null : update = {{ $shipmentMethod->id }}"></i>
