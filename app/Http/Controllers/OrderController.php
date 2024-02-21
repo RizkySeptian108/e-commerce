@@ -28,11 +28,40 @@ class OrderController extends Controller
     {
         $carts = [];
 
-        foreach($request->order as $order){
-            $cart = Cart::find($order['cart_id']);
+        $order = [
+            'kiosk' => [
+                'kiosk_id' => null,
+                'kiosk_name' => null,
+                'kiosk_logo' => null
+            ],
+            'items' => [],
+            'shipment' => [
+                'shipment_id' => '',
+                'shipment_method' => 'CHOOSE SHIPMENT METHOD',
+                'price' => 0
+            ]
+        ];
+
+        foreach($request->order as $item){
+            $cart = Cart::find($item['cart_id'], ['id', 'product_id', 'kiosk_id', 'qty']);
             $cart->load('product:id,product_name,product_picture,price_per_unit,unit', 'kiosk:id,kiosk_logo,kiosk_name');
-            $cart->order_qty = $order['qty'];
-            array_push($carts, $cart);
+            $cart->order_qty = $item['qty'];
+            
+            if($cart['kiosk_id'] !== $order['kiosk']['kiosk_id']){
+                $order['kiosk']['kiosk_id'] = $cart->kiosk_id;
+                $order['kiosk']['kiosk_name'] = $cart->kiosk->kiosk_name;
+                $order['kiosk']['kiosk_logo'] = $cart->kiosk->kiosk_logo;
+                $order['items'] = [];
+                array_push($order['items'], $cart);
+                array_push($carts, $order);
+            }else{
+                array_push($order['items'], $cart);
+                foreach($carts as $key => $crt){
+                    if($cart->kiosk_id === $crt['kiosk']['kiosk_id']){
+                        $carts[$key] = $order;
+                    }
+                }
+            }
         }
 
         $carts = collect($carts);
@@ -44,7 +73,7 @@ class OrderController extends Controller
         return view('order', [
             'page_title' => 'Order',
             'sidebar' => true,
-            'carts' => $carts->sortBy('kiosk_id'),
+            'carts' => $carts,
             'shipments' => $shipments,
             'totalItems' => $request->total,
             'paymentMethods' => $paymentMethods
@@ -56,48 +85,38 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
-        // return $request;
        $request->validate([
             'orders' => 'required|array',
             'payment_method' => 'required',
             'address' => 'required',
-            'orders.*.shipment_id' => 'required'
+            'orders.*.shipment_id' => 'required',
+            'orders.*.items.*.product_id' => 'required|integer|exists:products,id',
+            'orders.*.items.*.order_qty' => 'required|integer',
        ], [
             'orders.*.shipment_id.required' => 'shipment method for all orders are required',
             'payment_method.required' => 'please select payment method' 
        ]);
 
-       foreach($request->orders as $key => $order){
-            $recordedData = Order::create([
+       foreach($request->orders as $order){
+            $insertedOrder = Order::create([
                 'user_id' => Auth::user()->id,
                 'kiosk_id' => $order['kiosk_id'],
                 'address' => $request->address,
+                'total_price' => $order['totalPerOrder'],
                 'payment_id' => $request->payment_method,
                 'shipment_id' => $order['shipment_id'],
             ]);
 
-            $total_price = 0;
-
-            foreach($order['order_items'] as $item){
-                $item = OrderItem::create([
-                    'order_id' => $recordedData->id,
+            foreach($order['items'] as $item){
+                OrderItem::create([
+                    'order_id' => $insertedOrder->id,
                     'product_id' => $item['product_id'],
-                    'qty' => $item['qty']
+                    'qty' => $item['order_qty']
                 ]);
-
-                $total_price += $item->product->price_per_unit * $item->qty;
+                Cart::destroy($item['cart_id']);
             }
-
-            Order::where('id', $recordedData->id)
-                    ->update([
-                        'total_price' => $total_price
-                    ]);
-                    
        }
-
        return redirect('/');
-
     }
 
     /**

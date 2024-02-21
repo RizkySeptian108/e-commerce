@@ -13,13 +13,11 @@ class CartController extends Controller
 
     public function index()
     {
-        // $carts = Cart::with(['product:id,product_name,product_picture,price_per_unit,unit,kiosk_id,qty' => ['kiosk:id,kiosk_name',]])->where('user_id', Auth::user()->id)->get();
 
         $carts = Cart::with(['product:id,product_name,product_picture,price_per_unit,unit,qty'])
                  ->where('carts.user_id', Auth::user()->id)
                  ->join('kiosks', 'carts.kiosk_id', '=', 'kiosks.id')
                  ->select('carts.*', 'kiosks.kiosk_name')
-                //  ->orderBy('carts.created_at', 'DESC')
                  ->orderBy('kiosks.kiosk_name', 'DESC')
                  ->get();
 

@@ -43,7 +43,7 @@
                         <x-slot name="trigger">
                             <button class="text-slate-600 relative mr-4">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <p class="bg-red-600 text-sm text-white rounded-md text-[12px] absolute w-fit px-1 -bottom-2 left-3" x-show="carts.length > 1" x-text="carts.length"></p>
+                                <p class="bg-red-600 text-sm text-white rounded-md text-[12px] absolute w-fit px-1 -bottom-2 left-3" x-show="carts.length > 0" x-text="carts.length"></p>
                             </button>
                         </x-slot>
                         <x-slot name="content" >
