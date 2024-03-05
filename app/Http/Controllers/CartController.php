@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use PDO;
 
 class CartController extends Controller
 {
@@ -17,18 +18,44 @@ class CartController extends Controller
         $carts = Cart::with(['product:id,product_name,product_picture,price_per_unit,unit,qty'])
                  ->where('carts.user_id', Auth::user()->id)
                  ->join('kiosks', 'carts.kiosk_id', '=', 'kiosks.id')
-                 ->select('carts.*', 'kiosks.kiosk_name')
-                 ->orderBy('kiosks.kiosk_name', 'DESC')
+                 ->select('carts.*', 'kiosks.kiosk_name', 'kiosks.kiosk_logo')
                  ->get();
 
+        $orders = [];
+        $order = [
+            'kiosk' => [
+                'kiosk_id' => null,
+                'kiosk_name' => null,
+                'kiosk_logo' => null,
+            ],
+            'isKioskChecked' => false,
+            'items' => [],
+        ];
+
         foreach($carts as $cart){
-            $cart->isChecked = false;
+            $cart->isItemChecked = false;
+
+            if($cart->kiosk_id !== $order['kiosk']['kiosk_id']){
+                $order['kiosk']['kiosk_id'] = $cart->kiosk_id;
+                $order['kiosk']['kiosk_name'] = $cart->kiosk_name;
+                $order['kiosk']['kiosk_logo'] = $cart->kiosk_logo;
+                $order['items'] = [];
+                array_push($order['items'], $cart);
+                array_push($orders, $order);    
+            }else{
+                array_push($order['items'], $cart);
+                foreach($orders as $key => $ord){
+                    if($cart->kiosk_id === $ord['kiosk']['kiosk_id']){
+                        $orders[$key] = $order;
+                    }
+                }
+            }
         }
-                        
+
         return view('cart', [
             'page_title' => 'Cart',
             'sidebar' => true,
-            'carts' => $carts,
+            'carts' => collect($orders),
             ]);
     }
 

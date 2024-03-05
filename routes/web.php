@@ -65,6 +65,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'shows'])->name('cart.shows');
     Route::get('/carts', [CartController::class, 'index'])->name('cart.index');
 
+    // Orders
+    Route::get('/list/order', [OrderController::class, 'list'])->name('order.list');
+
 });
 
 // Kiosk

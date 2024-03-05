@@ -4,7 +4,7 @@
     <div class="bg-white rounded-md p-4">
         <x-title>{{ $page_title }} : {{ $product->product_name }}</x-title>
 
-        <div class="md:grid grid-cols-10 mt-4">
+        <div class="md:grid grid-cols-12 mt-4">
 
             {{-- Picture section --}}
             <div class="col-span-3 p-1 " id="picture">
@@ -12,7 +12,7 @@
             </div>
 
             {{-- Information Section --}}
-            <div class="col-span-5 p-1  text-sm" >
+            <div class="col-span-6 p-1  text-sm" >
                 <div class="p-2 border shadow ">
                     <p class="text-3xl font-sans font-bold">{{ $product->product_name }}</p>
                     <h3 class="text-[#00AA5B] font-bold mt-2">Price</h3>
@@ -40,12 +40,12 @@
             </div>
 
             {{-- Quantity & price section --}}
-            <div class="col-span-2 p-1">
+            <div class="col-span-3 p-1">
                 <div class="border border-green-700 rounded-md p-1">
                     <h1 class="font-extrabold text-lg text-center">Set quantity</h1>
                     <form action="{{ route('cart.store', ['product' => $product]) }}" class="p-1" x-data="{qty: 1, max: {{ $product->qty }}}" method="POST">
                         @csrf
-                        <div class="flex gap-3 items-center">
+                        <div class="flex gap-3 items-center justify-between">
                             <div class=" flex gap-2 border rounded-xl border-slate-300 px-2 py-1 w-fit focus:outline-none">
                                 <button type="button" x-on:click="qty <= 1 ? '' : qty-- " ><i class="fa-solid fa-minus"></i></button>
                                 <input type="number" readonly  min="0" name="qty" x-model="qty"  class="w-10 p-0 text-center border-none [&::-webkit-inner-spin-button]:appearance-none border-transparent focus:border-transparent focus:ring-0" id="">

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Kiosk;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Models\PaymentMethod;
@@ -27,8 +29,8 @@ class OrderController extends Controller
     public function create(OrderRequest $request)
     {
         $carts = [];
-
-        $order = [
+        
+        $cart = [
             'kiosk' => [
                 'kiosk_id' => null,
                 'kiosk_name' => null,
@@ -42,27 +44,22 @@ class OrderController extends Controller
             ]
         ];
 
-        foreach($request->order as $item){
-            $cart = Cart::find($item['cart_id'], ['id', 'product_id', 'kiosk_id', 'qty']);
-            $cart->load('product:id,product_name,product_picture,price_per_unit,unit', 'kiosk:id,kiosk_logo,kiosk_name');
-            $cart->order_qty = $item['qty'];
-            
-            if($cart['kiosk_id'] !== $order['kiosk']['kiosk_id']){
-                $order['kiosk']['kiosk_id'] = $cart->kiosk_id;
-                $order['kiosk']['kiosk_name'] = $cart->kiosk->kiosk_name;
-                $order['kiosk']['kiosk_logo'] = $cart->kiosk->kiosk_logo;
-                $order['items'] = [];
-                array_push($order['items'], $cart);
-                array_push($carts, $order);
-            }else{
-                array_push($order['items'], $cart);
-                foreach($carts as $key => $crt){
-                    if($cart->kiosk_id === $crt['kiosk']['kiosk_id']){
-                        $carts[$key] = $order;
-                    }
-                }
+        $orders = $request->orders;
+
+        foreach($orders as $order){
+            $kiosk = Kiosk::find($order['kiosk_id'], ['id', 'kiosk_name', 'kiosk_logo']);
+            $cart['kiosk']['kiosk_id'] = $kiosk->id;
+            $cart['kiosk']['kiosk_name'] = $kiosk->kiosk_name;
+            $cart['kiosk']['kiosk_logo'] = $kiosk->kiosk_logo;
+            $cart['items'] = [];
+            foreach($order['items'] as $item){
+                $cartItem = Cart::find($item['cart_id'], ['id', 'product_id', 'kiosk_id', 'qty']);
+                $cartItem->load('product:id,product_name,product_picture,price_per_unit,unit', 'kiosk:id,kiosk_logo,kiosk_name');
+                $cartItem->order_qty = $item['qty'];
+                array_push($cart['items'], $cartItem);
             }
-        }
+            array_push($carts, $cart);
+        };
 
         $carts = collect($carts);
         
@@ -113,6 +110,7 @@ class OrderController extends Controller
                     'product_id' => $item['product_id'],
                     'qty' => $item['order_qty']
                 ]);
+                Product::where('id', $item['product_id'])->decrement('qty', $item['order_qty']);
                 Cart::destroy($item['cart_id']);
             }
        }
@@ -122,9 +120,9 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -149,5 +147,22 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+    
+    public function list(Request $request)
+    {
+        $items = [];
+        $orders = Order::with('orderItems.product:id,product_name,unit,product_picture')->select('id', 'user_id', 'is_confirm')->where('user_id', $request->user_id)->get();
+
+        foreach($orders as $order){
+            foreach($order->orderItems as $item){
+                (!$order->is_confirm)? $item->status = 'PENDING': $item->status = 'ON DELIVERY';
+                array_push($items, $item);
+            }
+        }
+        
+        $items = collect($items);
+
+        return response()->json(['orders' => $items->sortBy('created_at')]);
     }
 }

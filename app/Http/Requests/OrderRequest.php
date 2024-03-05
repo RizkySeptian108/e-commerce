@@ -22,9 +22,10 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order' => 'required|array',
-            'order.*.cart_id' => 'int|required|exists:carts,id',
-            'order.*.qty' => 'required|numeric'
+            'orders' => 'required|array',
+            'orders.*.kiosk_id' => 'int|required|exists:kiosks,id',
+            'orders.*.items.*.cart_id' => 'int|required|exists:products,id',
+            'orders.*.items.*.qty' => 'required|numeric'
         ];
     }
 }
