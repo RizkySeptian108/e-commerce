@@ -2,7 +2,7 @@
 
 @section('main-page')
 
-    <div class="py-3 px-12">
+    <div class="py-3 lg:px-12 w-full p-2">
         <h1 class="font-bold text-2xl uppercase">Cart</h1>
 
         @if($errors->any())
@@ -48,7 +48,7 @@
                 return items
             }
         }">
-            <div class="grid grid-cols-12 mt-4 gap-2">
+            <div class="lg:grid grid-cols-12 mt-4 gap-2">
                 @csrf
                 <div class="col-span-9 shadow">
                     {{-- Check all button --}}
@@ -105,7 +105,7 @@
                                     },
                                 }
                             " class="mb-2">
-                                <div class="grid grid-cols-12 gap-2 font-semibold">
+                                <div class="flex gap-2 font-semibold">
                                     <input type="checkbox" class="mr-2 rounded-md w-5 h-5 col-span-1" id="product_check" :name="'orders['+indexKiosk+'][items]['+indexItem+'][cart_id]'" x-on:change="
                                         item.isItemChecked = !item.isItemChecked;
                                         cart.isKioskChecked = true
@@ -113,9 +113,11 @@
                                     :value="item.id"
                                     x-bind:checked="item.isItemChecked == true? true : false"
                                     >
-                                    <img  :src="'{{ asset('storage') }}' + '/' + item.product.product_picture" :alt="item.product_name"  class="col-span-2 w-28" >
-                                    <p class="col-span-6 text-ellipsis" x-text="item.product.product_name"></p>
-                                    <p class="col-span-3 w-full text-end" id="totalPerProduct" x-text="(price * item.qty).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })" ></p>
+                                    <img  :src="'{{ asset('storage') }}' + '/' + item.product.product_picture" :alt="item.product_name"  class="col-span-2 w-16 md:w-28" >
+                                    <div class="md:flex flex-row w-full">
+                                        <p class="col-span-6 text-ellipsis" x-text="item.product.product_name"></p>
+                                        <p class="col-span-3 w-full text-xs md:text-base md:text-end" id="totalPerProduct" x-text="(price * item.qty).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })" ></p>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="mt-1 flex justify-end items-center gap-2">
@@ -148,7 +150,7 @@
                 </div>
 
                 {{-- Shopping summary --}}
-                <div class="col-span-3">
+                <div class="col-span-3 sticky bottom-0 lg:static w-full max-sm:mt-4">
                     <div class="w-full bg-white p-4 rounded-lg shadow">
                         <h3 class="font-bold text-lg text-center">Shopping summary</h3>
                         <div class="flex justify-between mt-2 items-center">

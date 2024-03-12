@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main-page')
-    <div class="lg:px-12 py-3">
+    <div class="lg:px-12 px-3 py-2">
         <h1 class="font-bold text-2xl uppercase">Order</h1>
         <form action="{{ route('order.store') }}" method="POST"
             x-data="{
@@ -27,7 +27,7 @@
             }"
         >
             @csrf
-            <div class="grid grid-cols-12 mt-4 gap-2">
+            <div class="md:grid grid-cols-12 mt-4 gap-2">
                 <div class="col-span-8">
                     {{-- Address and costumer detail start --}}
                     <div class="bg-white p-4 rounded-t-xl shadow mb-4">
@@ -47,7 +47,7 @@
                     {{-- shipment input error message end --}}
 
                     {{-- Loop the carts --}}
-                    <div class="bg-white shadow p-2">
+                    <div class="bg-white shadow p-2 max-w-full">
                         <template x-for="(cart, index) in carts">
                             <div x-data="{
                                 totalPerOrder: function(items){
@@ -59,6 +59,7 @@
                                     return price;
                                 }
                             }">
+                                {{-- kiosk logo & name --}}
                                 <div class="mt-4 flex items-center gap-3">
                                     <img :src="'{{ asset('storage') }}/' + cart.kiosk.kiosk_logo" :alt="cart.kiosk_name" class="w-7 h-7 border border-slate-400 rounded-full shadow-sm">
                                     <input type="hidden" :name="'orders['+index+'][kiosk_id]'" :value="cart.kiosk.kiosk_id">
@@ -70,24 +71,26 @@
                                 {{-- items detail start --}}
                                 <div >
                                     <template x-for="(item, i) in cart.items">
-                                        <div class="grid grid-cols-12 gap-2 mt-2">                                            
-                                            <img  :src="'{{ asset('storage') }}' + '/' + item.product.product_picture" :alt="item.product.product_name"  class="col-span-2 w-28 rounded-md shadow" >
-                                            <div class="col-span-7">
-                                                <input type="hidden" :name="'orders['+ index +'][items]['+i+'][cart_id]'" :value="item.id">
-                                                <input type="hidden" :name="'orders['+ index +'][items]['+i+'][product_id]'" :value="item.product_id">
-                                                <input type="hidden" :name="'orders['+ index +'][items]['+i+'][order_qty]'" :value="item.order_qty">
-                                                <p class="text-ellipsis uppercase" x-text="item.product.product_name"></p>
-                                                <p class="text-sm opacity-80">Unit: <span x-text="item.product.unit"></span></p>
-                                            </div>
-                                            <div class="col-span-3 text-end px-4">
-                                                <p class="text-sm font-bold" id="totalPerProduct" x-text="(item.product.price_per_unit * item.order_qty).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })" ></p>
-                                                <p class="text-sm opacity-80"><span x-text="item.order_qty"></span> x <span x-text="item.product.price_per_unit.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })"></span></p>
+                                        <div class="flex gap-2 mt-2">                                            
+                                            <img  :src="'{{ asset('storage') }}' + '/' + item.product.product_picture" :alt="item.product.product_name"  class=" w-28 rounded-md shadow" >
+                                            <div class="flex max-sm:flex-col justify-between flex-grow">
+                                                <div class="">
+                                                    <input type="hidden" :name="'orders['+ index +'][items]['+i+'][cart_id]'" :value="item.id">
+                                                    <input type="hidden" :name="'orders['+ index +'][items]['+i+'][product_id]'" :value="item.product_id">
+                                                    <input type="hidden" :name="'orders['+ index +'][items]['+i+'][order_qty]'" :value="item.order_qty">
+                                                    <p class="text-ellipsis uppercase" x-text="item.product.product_name"></p>
+                                                    <p class="text-sm opacity-80">Unit: <span x-text="item.product.unit"></span></p>
+                                                </div>
+                                                <div class="text-xs md:text-sm md:text-end ">
+                                                    <p class="font-bold" id="totalPerProduct" x-text="(item.product.price_per_unit * item.order_qty).toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })" ></p>
+                                                    <p class="opacity-80"><span x-text="item.order_qty"></span> x <span x-text="item.product.price_per_unit.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })"></span></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </template>
 
                                     {{-- Shipment methods --}}
-                                    <div class="grid grid-cols-12 mt-6 pr-4">
+                                    <div class="md:grid grid-cols-12 mt-6 pr-4">
                                         <div class="col-span-10 col-start-3 relative" x-data="{
                                             shipments: {{ $shipments }}, 
                                             open: false, 
@@ -124,7 +127,7 @@
                 </div>
                 
                 {{-- Shopping Summary --}}
-                <div class="col-span-4">
+                <div class="col-span-4 max-sm:sticky bottom-0 max-sm:mt-2">
                     <div class="w-full bg-white p-4 rounded-lg shadow">
                         <h3 class="font-bold text-lg text-center">Shopping summary</h3>
 

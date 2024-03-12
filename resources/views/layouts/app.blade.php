@@ -16,6 +16,12 @@
 
         {{-- Icons --}}
         <link rel="stylesheet" href="{{ asset('fontawesome-free-6.5.1-web/css/all.min.css') }}">
+
+        {{-- <style>
+            div {
+                border: 2px solid red;
+            }
+        </style> --}}
     </head>
     <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-900">
     
@@ -26,7 +32,7 @@
                     <x-sidebar />
                 @endif
 
-                <div class="flex-1 p-6">
+                <div class="flex-1 p-2 md:p-6 max-w-full">
                    @yield('main-page')
                 </div>
             </main>

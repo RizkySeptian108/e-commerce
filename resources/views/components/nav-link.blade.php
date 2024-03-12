@@ -7,5 +7,5 @@ $classes = (Request::is(Str::lower($page). '*'))
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }} href="{{ $link }}" :class="open ? '' : 'border-b-0'">
-    {{ $slot }} <span class="ml-2" :class="open ? '' : 'hidden' ">{{ $page }}</span>
+    {{ $slot }} <span class="ml-2" :class="{'md:hidden':!open}" x-transition:enter.duration.500ms>{{ $page }}</span>
 </a>

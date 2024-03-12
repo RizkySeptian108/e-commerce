@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('main-page')
-
     <x-title>
         {{ $page_title }}
     </x-title>
@@ -16,6 +15,5 @@
             </div>
         </div>
     </div>
-
 
 @endsection

@@ -39,7 +39,7 @@ class OrderController extends Controller
             'items' => [],
             'shipment' => [
                 'shipment_id' => '',
-                'shipment_method' => 'CHOOSE SHIPMENT METHOD',
+                'shipment_method' => 'SHIPMENT METHOD',
                 'price' => 0
             ]
         ];

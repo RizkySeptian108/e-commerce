@@ -19,6 +19,7 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'page_title' => 'profile',
             'user' => $request->user(),
+            'sidebar' => true
         ]);
     }
 

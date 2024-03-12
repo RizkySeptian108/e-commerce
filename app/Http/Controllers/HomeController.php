@@ -10,11 +10,19 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $kioskId = '';
+        if (Auth::check()) { // Check if there is an authenticated user
+            $user = Auth::user();
+            if ($user->kiosk) { // Check if the user has a kiosk associated
+                $kioskId = $user->kiosk->id;
+            }
+        }
         return view('home', [
             'page_title' => 'Home',
             'sidebar' => true,
             'categories' => Category::all(),
-            'products' => Product::latest()->filter(request(['search', 'category', 'kiosk']))->where('kiosk_id', '!=', Auth::user()->kiosk->id)->paginate(12)
+            'products' => Product::latest()->filter(request(['search', 'category', 'kiosk']))->where('kiosk_id', '!=', $kioskId)->paginate(12),
+            'searchs' => request(['search', 'category', 'kiosk']) 
         ]);       
     }
 

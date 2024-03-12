@@ -7,13 +7,13 @@
         <div class="md:grid grid-cols-12 mt-4">
 
             {{-- Picture section --}}
-            <div class="col-span-3 p-1 " id="picture">
+            <div class="col-span-3 p-1" id="picture">
                 <img src="{{ asset('storage/'. $product->product_picture) }}" class="w-full rounded-2xl" alt="">
             </div>
 
             {{-- Information Section --}}
-            <div class="col-span-6 p-1  text-sm" >
-                <div class="p-2 border shadow ">
+            <div class="col-span-6 p-1  text-sm flex flex-col gap-2" >
+                <div class="p-2 border shadow order-2 md:order-1">
                     <p class="text-3xl font-sans font-bold">{{ $product->product_name }}</p>
                     <h3 class="text-[#00AA5B] font-bold mt-2">Price</h3>
                     <p class="font-sans text-2xl">Rp. {{ number_format($product->price_per_unit) }}</p>
@@ -23,9 +23,7 @@
                     <p class="text-lg">{{ $product->description}}</p>
                 </div>
 
-                <hr class="mt-2">
-
-                <div class="mt-2 shadow border p-2 ">
+                <div class="mt-2 shadow border p-2 order-1 md:order-2">
                     <div class="flex justify-between item-center">
                         <a href="{{ route('home', ['kiosk' => $product->kiosk_id]) }}" class="flex items-center">
                             <img src="{{ asset('storage/'. $product->kiosk->kiosk_logo) }}" alt="{{ $product->kiosk->kiosk_name }}" class="w-14 h-14 rounded-full border shadow object-cover mr-2">
@@ -40,7 +38,7 @@
             </div>
 
             {{-- Quantity & price section --}}
-            <div class="col-span-3 p-1">
+            <div class="col-span-3 p-1 md:static sticky bottom-0 bg-white ">
                 <div class="border border-green-700 rounded-md p-1">
                     <h1 class="font-extrabold text-lg text-center">Set quantity</h1>
                     <form action="{{ route('cart.store', ['product' => $product]) }}" class="p-1" x-data="{qty: 1, max: {{ $product->qty }}}" method="POST">

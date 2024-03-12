@@ -8,7 +8,7 @@
         this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
     }
 }"
- x-init="() => { setInterval(() => nextSlide(), 5000); }" class="rounded-md h-80 w-full overflow-hidden relative border border-red-500">
+ x-init="() => { setInterval(() => nextSlide(), 5000); }" class=" rounded-md h-80 w-full overflow-hidden relative border border-red-500">
 
     <div class="relative">
         <div  class="absolute top-0 left-0 right-100" x-show="currentSlide === 0" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">

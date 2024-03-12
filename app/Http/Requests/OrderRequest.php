@@ -24,6 +24,7 @@ class OrderRequest extends FormRequest
         return [
             'orders' => 'required|array',
             'orders.*.kiosk_id' => 'int|required|exists:kiosks,id',
+            'orders.*.items' => 'required|array',
             'orders.*.items.*.cart_id' => 'int|required|exists:products,id',
             'orders.*.items.*.qty' => 'required|numeric'
         ];

@@ -1,20 +1,20 @@
-<nav x-data="{ open: false , search: false}" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky z-10 top-0 shadow grid grid-cols-12 py-3 px-3 md:px-16 items-center gap-3" >
+<nav x-data="{ open: false , search: false}" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700  sticky z-10 top-0 shadow grid grid-cols-12 py-3 px-3 md:px-16 items-center gap-3" >
     <!-- Primary Navigation Menu -->
-    <div class="col-span-1 lg:col-span-3 md:col-span-2">
+    <div class="hidden md:block lg:col-span-3 md:col-span-2">
         <!-- Logo -->
         <div class="shrink-0 w-full flex">
-            <a href="/" class="text-lg text-slate-600 md:hidden">
-                <i class="fa-solid fa-house block w-full"></i>
-            </a>
-            <a href="{{ route('home') }}" class="hidden md:block">
+            <a href="{{ route('home') }}">
                 <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
             </a>
         </div>
     </div>
 
     {{-- search input bar --}}
-    <div class="flex flex-row md:block items-center gap-2 md:col-span-7 lg:col-span-6 transition-all" :class="{ 'col-span-11': search, 'col-span-7': !search }" x-cloak>
-        <form method="GET" action="{{ route('home') }}" class="relative flex-grow" >
+    <div class="col-span-8 w-full flex flex-row md:block items-center gap-2 md:col-span-7 lg:col-span-6" :class="{ 'col-span-12': !search }" >
+        <a href="/" class="text-lg text-slate-600 md:hidden">
+            <i class="fa-solid fa-house block w-full"></i>
+        </a>
+        <form method="GET" action="{{ route('home') }}" class="relative w-full flex-grow" >
             @csrf
             
             @if (request('category'))
@@ -25,20 +25,20 @@
                 <input type="hidden" name="kiosk" value="{{ request('kiosk') }}">
             @endif
 
-            <x-text-input name="search" placeholder="insert item name" @click="search = !search" class="w-full rounded-lg" />
+            <x-text-input name="search" placeholder="insert item name" @click="search = !search" class="w-full rounded-s-3xl rounded-e-3xl" />
             <button type="submit" class="absolute right-3 bottom-2"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
         </form>
     </div>
 
     {{-- Account informastion --}}
-    <div class="col-span-4 md:col-span-3 md:block flex justify-end" :class="{ 'hidden': search }">
+    <div class="col-span-4 md:col-span-3 md:block" :class="{ 'hidden': search }">
         @if (Auth::user())           
             <!-- Settings Dropdown -->
             <div class="flex flex-row items-center justify-end">
                 
                 {{-- ordersdropdown --}}
                 <div x-data="{ orders: []}" x-init="orders = fetch(`{{ route('order.list', ['user_id' => Auth::user()->id ]) }}`).then(response => response.json()).then(data => data.orders).then(ordersData => orders = ordersData)" >
-                    <x-dropdown width="w-80" dropdownClass="max-sm:-right-16">
+                    <x-dropdown width="w-80">
                         <x-slot name="trigger">
                             <button class="text-slate-600 relative mr-4">
                                 <i class="fa-solid fa-box-open"></i>
@@ -73,7 +73,7 @@
                 
                 {{-- cartdropdown --}}
                 <div x-data="{ carts: []}" x-init="carts = fetch(`{{ route('cart.shows', ['user_id' => Auth::user()->id ]) }}`).then(response => response.json()).then(data => data.carts).then(cartsData => carts = cartsData)">
-                    <x-dropdown align="rigth" width="w-80" dropdownClass="max-sm:-right-8">
+                    <x-dropdown align="rigth" width="w-80">
                         <x-slot name="trigger">
                             <button class="text-slate-600 relative mr-4">
                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -169,7 +169,7 @@
         
     </div>
     <!-- Responsive Navigation Menu -->
-    <div x-show="open" x-cloak class="transition-all duration-200 flex" x-transition>
+    <div x-show="open" class="flex" x-transition.scale.origin.top>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
@@ -182,13 +182,6 @@
                     <x-responsive-nav-link :href="route('profile.edit')">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
-
-                    @if (Auth::user()->kiosk)    
-                    {{-- Kiosk control link --}}
-                    <x-responsive-nav-link :href="route('dashboard')">
-                        {{ __('Your Kiosk') }}
-                    </x-responsive-nav-link>
-                    @endif
 
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
@@ -214,5 +207,6 @@
 
         </div>
     </div>
+
 </nav>
 
