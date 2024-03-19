@@ -16,7 +16,7 @@ class isKiosk
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->kiosk->id === null ){
+        if(Auth::user()->kiosk === null){
             return abort(404);
         }
         return $next($request);

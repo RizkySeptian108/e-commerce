@@ -20,7 +20,8 @@ return new class extends Migration
             $table->integer('total_price')->nullable();
             $table->foreignId('payment_method');
             $table->foreignId('shipment_method');
-            $table->boolean('is_confirm');
+            $table->boolean('is_confirm')->nullable();
+            $table->boolean('is_packed')->nullable();
             $table->timestamps();
         });
     }

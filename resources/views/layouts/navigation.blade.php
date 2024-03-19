@@ -57,11 +57,6 @@
                                         <p x-text="order.status" class="text-right text-sm font-semibold text-orange-400"></p>
                                     </div>
                                 </template>
-                                <div x-show="carts.length > 0" class="w-full px-2 flex justify-end">
-                                    <form action="{{ route('cart.index') }}" method="GET">
-                                        <x-primary-button>Buy</x-primary-button>
-                                    </form>
-                                </div>
                                 <div x-show="orders.length <= 0" class="p-2 text-center">
                                     <span class="font-bold text-orange-400">You haven't order anything yet!</span>
                                 </div>
@@ -127,8 +122,8 @@
                         </x-dropdown-link>
 
                         @if (isset(Auth::user()->kiosk))
-                            <x-dropdown-link :href="route('kiosk.edit', Auth::user()->kiosk->id)">
-                                {{ __('Kiosk Profile') }}
+                            <x-dropdown-link :href="route('dashboard')">
+                                {{ __('Your Kiosk') }}
                             </x-dropdown-link>
                         @else
                         <x-dropdown-link :href="route('kiosk.create')">

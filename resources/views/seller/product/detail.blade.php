@@ -4,7 +4,7 @@
     <div class="bg-white rounded-md p-4">
         <x-title>{{ $page_title }} : {{ $product->product_name }}</x-title>
 
-        <div class="grid grid-cols-6 mt-4">
+        <div class="md:grid grid-cols-6 mt-4">
 
             {{-- Picture section --}}
             <div class="col-span-2 p-1" id="picture">

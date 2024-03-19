@@ -84,7 +84,7 @@
             </div>
 
             {{-- File input --}}
-            <input class="w-1/2 bg-gray-200 border border-slate-300 rounded-md file:bg-slate-800 file:border-none file:text-white file:p-1" id="product_picture" type="file" name="product_picture" @change="image = URL.createObjectURL($event.target.files[0])">
+            <input class="mt-2 w-1/2 bg-gray-200 border border-slate-300 rounded-md file:bg-slate-800 file:border-none file:text-white file:p-1" id="product_picture" type="file" name="product_picture" @change="image = URL.createObjectURL($event.target.files[0])">
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="product_picture_help">SVG, PNG, JPG or GIF (MAX 2mb).</p>
             <x-input-error class="mt-2" :messages="$errors->get('product_picture')" />
         </div>

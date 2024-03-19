@@ -1,11 +1,11 @@
 <nav {{ $attributes->merge(['class' => 'sticky top-[65px] md:w-1/6 bg-white text-gray-800 h-screen duration-200 z-30 relative']) }} x-data="{open: true}" :class="open ? 'w-0' : 'w-1/2 md:p-3 md:w-12 md:py-3 md:px-1 md:block'">
-    <div class="bg-slate-900 text-white opacity-50 fixed rounded-full bottom-4 left-2 p-2" @click="open = !open" id="tombol">
+    <div class="bg-slate-900 md:hidden text-white opacity-50 fixed rounded-full bottom-4 left-2 p-2" @click="open = !open" id="tombol">
         <i class="fa-solid fa-arrow-right"></i>
     </div>
 
     <div :class="{'max-sm:hidden':open}">
         <div class="flex justify-center items-center px-3 py-1 hover:bg-slate-200 hover:rounded-md cursor-pointer z-50" @click="open = !open" >
-            <i class="fa-solid fa-angle-left mr-1 duration-200 " :class="open ? '' : 'rotate-180'"></i><span class="font-bold " x-show="open" x-transition:enter.duration.500ms>close</span>
+            <i class="fa-solid fa-angle-left mr-1 duration-200 " :class="open ? '' : 'md:rotate-180'"></i><span class="font-bold " :class="{'md:hidden':!open}" x-transition:enter.duration.500ms>close</span>
         </div>
         <hr class="mt-2">
     
@@ -14,9 +14,13 @@
             <x-nav-link page="Dashboard" link="{{ route('dashboard') }}">
                 <i class="fa-solid fa-house"></i>
             </x-nav-link>
-            <x-nav-link page="Products" link="{{ route('product.index') }}">
-                <i class="fa-solid fa-boxes-packing"></i>
+            <x-nav-link page="Product" link="{{ route('product.index') }}">
+                <i class="fa-solid fa-box"></i>
             </x-nav-link>
+            <x-nav-link page="Order" link="{{ route('order.index') }}">
+                <i class="fa-solid fa-list-check"></i>
+            </x-nav-link>
+
         @endif
     
         @if (Auth::user()->access_id === 1)    

@@ -8,7 +8,7 @@
 
         <div class="mt-4 p-2 flex gap-2 w-full overflow-x-scroll border-b-2">
             @foreach ($categories as $category)
-                <a class="bg-purple-700 md:p-3 p-2 rounded-full text-center font-bold font-sans text-white  w-fit bg-gradient-to-tr from-purple-400
+                <a class="whitespace-nowrap bg-purple-700 md:p-3 p-2 rounded-full text-center font-bold font-sans text-white w-fit bg-gradient-to-tr from-purple-400
                    @if(request('category') === $category->id) underline underline-offset-2 @endif"  
                    href="{{ route('home', ['category' => $category->id]) }}"
                    >

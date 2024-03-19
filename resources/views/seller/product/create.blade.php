@@ -51,8 +51,8 @@
             </div>
             <div class="mt-4" x-data="{image: null}">
                 <x-input-label for="product_picture" :value="__('Product Picture')" />
-                <img :src="image" class="w-1/4 border-4 border-slate-400 rounded-md overflow-hidden mb-4" x-show="image">
-                <input class="w-1/2 bg-gray-200 border border-slate-300 rounded-md file:bg-slate-800 file:border-none file:text-white file:p-1" id="product_picture" type="file" name="product_picture" @change="image = URL.createObjectURL($event.target.files[0])">
+                <img :src="image" class="w-1/2 md:w-1/2 border-4 border-slate-400 rounded-md overflow-hidden mb-4" x-show="image">
+                <input class="w-full md:w-1/2 bg-gray-200 border border-slate-300 rounded-md file:bg-slate-800 file:border-none file:text-white file:p-1" id="product_picture" type="file" name="product_picture" @change="image = URL.createObjectURL($event.target.files[0])">
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="product_picture_help">SVG, PNG, JPG or GIF (MAX 2mb).</p>
                 <x-input-error class="mt-2" :messages="$errors->get('product_picture')" />
             </div>

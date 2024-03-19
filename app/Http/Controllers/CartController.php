@@ -94,6 +94,14 @@ class CartController extends Controller
     public function destroy(Cart $cart){
         Cart::destroy('id', $cart->id);
 
+
         return redirect('/carts');
+    }
+
+    public function listCarts(Request $request)
+    {
+        $carts = Cart::where('kiosk_id', $request->kiosk_id)->count();
+
+        return response()->json(['carts' => $carts]);
     }
 }

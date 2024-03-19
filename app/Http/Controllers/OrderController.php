@@ -20,7 +20,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        
+        $orders = Order::with('orderItems.product:id,product_name,unit,product_picture,price_per_unit', 'user:id,name')->where('kiosk_id', Auth::user()->kiosk->id)->paginate(10);
+        return view('seller.order.order-kiosk',[
+            'page_title' => 'order list',
+            'orders' => $orders
+        ]);
     }
 
     /**
@@ -138,7 +142,22 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+
+        if($request->status === 'confirm'){
+            Order::where('id', $order->id)
+                ->update([
+                    'is_confirm' => true
+                ]);
+        }else if($request->status === 'deliver'){
+            if(!$order->is_confirm){
+                return redirect(route('order.index'))->with('not_confirm', 'the order is not yet confirm');
+            }
+            Order::where('id', $order->id)
+                ->update([
+                    'is_packed' => true
+                ]);
+        }
+        return redirect(route('order.index'));
     }
 
     /**
@@ -156,7 +175,13 @@ class OrderController extends Controller
 
         foreach($orders as $order){
             foreach($order->orderItems as $item){
-                (!$order->is_confirm)? $item->status = 'PENDING': $item->status = 'ON DELIVERY';
+                if($order->is_confirm){
+                    $item->status = "PACKED";
+                }else if(!$order->is_confirm){
+                    $item->status = "PENDING";
+                }elseif($order->is_packed){
+                    $item->status = "ON DELIVERY";
+                }
                 array_push($items, $item);
             }
         }
@@ -164,5 +189,12 @@ class OrderController extends Controller
         $items = collect($items);
 
         return response()->json(['orders' => $items->sortBy('created_at')]);
+    }
+
+    public function listKiosk(Request $request)
+    {
+        // list for dashboard
+        $orders = Order::filter(request(['kiosk_id', 'is_confirm']))->count();
+        return response()->json(['orders' => $orders]);
     }
 }

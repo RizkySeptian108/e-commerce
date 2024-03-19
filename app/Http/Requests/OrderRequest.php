@@ -25,7 +25,7 @@ class OrderRequest extends FormRequest
             'orders' => 'required|array',
             'orders.*.kiosk_id' => 'int|required|exists:kiosks,id',
             'orders.*.items' => 'required|array',
-            'orders.*.items.*.cart_id' => 'int|required|exists:products,id',
+            'orders.*.items.*.cart_id' => 'int|required|exists:carts,id',
             'orders.*.items.*.qty' => 'required|numeric'
         ];
     }

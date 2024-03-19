@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/kiosk', KioskController::class)->only('create','store');
 
         // Order route
-        Route::resource('/order', OrderController::class);
+        Route::resource('/order', OrderController::class)->only('create', 'store');
     });
 
     // create data in cart
@@ -74,6 +74,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth', 'verified', 'isKiosk')->group(function() {
     Route::resource('/kiosk', KioskController::class)->except('create', 'store');
     Route::resource('/product', ProductController::class);
+
+    Route::resource('/order', OrderController::class)->only('index', 'update');
+    Route::get('/kiosk-list/order', [OrderController::class, 'listKiosk'])->name('order.kiosk');
+
+    Route::get('/carts/counts', [CartController::class, 'listCarts'])->name('cart.count');
 });
 
 require __DIR__.'/auth.php';

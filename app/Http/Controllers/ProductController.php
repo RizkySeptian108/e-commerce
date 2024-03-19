@@ -114,7 +114,7 @@ class ProductController extends Controller
             return abort(404);
         }
 
-        if($product->product_picture){
+        if($product->product_picture AND $product->product_picture !== 'product-picture/default.jpg'){
             Storage::disk('public')->delete($product->product_picture);
         }
 

@@ -39,6 +39,11 @@
                     {{-- Address and costumer detail start --}}
 
                     {{-- shipment input error message start --}}
+                    @error('address')
+                        <x-alert color="red">
+                            {{ $message }}
+                        </x-alert>
+                    @enderror
                     @error('orders.*.shipment_id')
                         <x-alert color="red">
                             {{ $message }}

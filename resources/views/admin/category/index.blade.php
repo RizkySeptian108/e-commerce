@@ -37,11 +37,11 @@
         </div>
 
         <div class="mt-4">
-            <table class="border border-slate-500" >
+            <table class="border border-slate-500 w-full" >
                 <thead>
                     <tr class="bg-slate-400 text-white font-semibold">
                         <th class="border border-slate-500 px-2 py-1 text-center">no</th>
-                        <th class="border border-slate-500 px-28 py-1">category</th>
+                        <th class="border border-slate-500 px-2 py-1">category</th>
                         <th class="border border-slate-500 px-2 py-1">action</th>
                     </tr>
                 </thead>
@@ -57,7 +57,7 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="text" name="category_name" value="{{ $category->category_name }}" class="p-1 rounded-md border-slate-400 focus:ring-blue-200">
-                                    <x-primary-button type="submit">submit</x-primary-button>
+                                    <x-primary-button type="submit" class="m-1">submit</x-primary-button>
                                 </form>
                             </td>
                             <td class="border border-slate-500 px-2 py-1 text-center">
