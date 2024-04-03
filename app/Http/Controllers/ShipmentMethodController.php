@@ -32,7 +32,8 @@ class ShipmentMethodController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'shipment_method' => 'required|string|min:3|max:50'
+            'shipment_method' => 'required|string|min:3|max:50',
+            'price' => 'required|numeric'
         ]);
 
         ShipmentMethod::create($validatedData);
@@ -62,7 +63,8 @@ class ShipmentMethodController extends Controller
     public function update(Request $request, ShipmentMethod $shipmentMethod)
     {
         $validatedData = $request->validate([
-            'shipment_method' => 'required|string|min:3|max:50'
+            'shipment_method' => 'required|string|min:3|max:50',
+            'price' => 'required|numeric'
         ]);
 
         ShipmentMethod::where('id', $shipmentMethod->id)
@@ -76,6 +78,7 @@ class ShipmentMethodController extends Controller
      */
     public function destroy(ShipmentMethod $shipmentMethod)
     {
+        return $shipmentMethod;
         ShipmentMethod::destroy($shipmentMethod->id);
 
         return redirect('shipment-method')->with('success', 'shipment method ' . $shipmentMethod->shipment_method . 'is successfully deleted');

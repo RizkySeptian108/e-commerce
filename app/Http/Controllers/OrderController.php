@@ -171,16 +171,16 @@ class OrderController extends Controller
     public function list(Request $request)
     {
         $items = [];
-        $orders = Order::with('orderItems.product:id,product_name,unit,product_picture')->select('id', 'user_id', 'is_confirm')->where('user_id', $request->user_id)->get();
+        $orders = Order::with('orderItems.product:id,product_name,unit,product_picture')->select('id', 'user_id', 'is_confirm', 'is_packed')->where('user_id', $request->user_id)->get();
 
         foreach($orders as $order){
             foreach($order->orderItems as $item){
-                if($order->is_confirm){
+                if($order->is_confirm AND $order->is_packed){
+                    $item->status = "ON DELIVERY";
+                }elseif($order->is_confirm){
                     $item->status = "PACKED";
                 }else if(!$order->is_confirm){
                     $item->status = "PENDING";
-                }elseif($order->is_packed){
-                    $item->status = "ON DELIVERY";
                 }
                 array_push($items, $item);
             }

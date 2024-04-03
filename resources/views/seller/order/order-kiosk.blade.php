@@ -22,11 +22,10 @@
         <div class="flex flex-col gap-2">
             <div class="rounded-lg shadow">
                 <div class="flex gap-2 items-center w-full p-2 bg-gray-200 rounded-t-lg ">
-                    <input type="checkbox" name="" id="" class="rounded-md">
                     <p class="font-bold">{{ $order->user->name }}</p>
                     <p class="text-sm font-light">{{ $order->created_at->format('d M Y') }}</p>
                 </div>
-                <div class="flex p-2 w-full gap-2 justify-between">
+                <div class="flex flex-col md:flex-row p-2 w-full gap-2 justify-between">
                     <div class="flex gap-2 flex-col">
                         @foreach ($order->orderItems as $item) 
                         <div class="flex gap-2">

@@ -24,7 +24,7 @@
                         @csrf
                         <x-input-label for="shipment_method" >
                             <input type="text" name="shipment_method" id="shipment_method" placeholder="insert shipment method" class="rounded-md border-slate-500">
-                            <input type="text" name="price" id="price" placeholder="insert price" class="rounded-md border-slate-500">
+                            <input type="text" name="price" id="price" placeholder="insert price" class="rounded-md border-slate-500 mt-1">
                         </x-input-label>
                         <x-primary-button type="submit" class="mt-2">
                             submit
@@ -41,36 +41,42 @@
             <table class="border border-slate-500" >
                 <thead>
                     <tr class="bg-slate-400 text-white font-semibold">
-                        <th class="border border-slate-500 px-2 py-1 text-center">no</th>
-                        <th class="border border-slate-500 px-28 py-1">shipment method</th>
-                        <th class="border border-slate-500 px-28 py-1">price</th>
+                        <th class="border border-slate-500 py-1 text-center">no</th>
+                        <th class="border border-slate-500 py-1 px-2">shipment method</th>
+                        <th class="border border-slate-500 py-1 px-2">price</th>
                         <th class="border border-slate-500 px-2 py-1">action</th>
                     </tr>
                 </thead>
-                <tbody x-data="{update: null}">
+                <tbody>
                     @foreach ($shipmentMethods as $shipmentMethod)
-                        <tr>
+                        <tr x-data="{update: false, shipmentMethod: '{{ $shipmentMethod->shipment_method }}', price: '{{ $shipmentMethod->price }}'}">
                             <td class="border border-slate-500 px-2 py-1 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-slate-500 px-2 py-1">
-                                <span :class="update === {{ $shipmentMethod->id }} ? 'hidden' : ''" >
+                                <span x-show="!update">
                                     {{ $shipmentMethod->shipment_method }}
                                 </span>
-                                <form action="{{ route('shipment-method.update', $shipmentMethod) }}" :class="update === {{ $shipmentMethod->id }} ? 'block' : 'hidden'" method="POST">
+                                <input type="text" name="shipment_method"  class="p-1 w-20 rounded-md border-slate-400 focus:ring-blue-200" x-show="update" x-model="shipmentMethod" x-cloak>
+                            </td>
+                            <td class="border border-slate-500 px-2 py-1 text-center">
+                                <span x-show="!update">
+                                    Rp. {{ number_format($shipmentMethod->price) }}
+                                </span>
+                                <input type="number" name="price"  class="p-1 w-20 rounded-md border-slate-400 focus:ring-blue-200" x-model="price" x-show="update" x-cloak>
+                            </td>
+                            <td class="border border-slate-500 px-2 py-1 text-center">
+                                <form action="{{ route('shipment-method.update', $shipmentMethod) }}" method="POST" x-cloak>
                                     @csrf
                                     @method('PUT')
-                                    <input type="text" name="shipment_method" value="{{ $shipmentMethod->shipment_method }}" class="p-1 rounded-md border-slate-400 focus:ring-blue-200">
-                                    <x-primary-button type="submit">submit</x-primary-button>
+                                    <input type="hidden" :value="shipmentMethod" name="shipment_method">
+                                    <input type="hidden" :value="price" name="price">
+                                    <x-primary-button x-show="update">submit</x-primary-button>
+                                    <i class="fa-solid fa-xmark text-red-600 cursor-pointer" @click="update = !update" x-show="update"></i>
                                 </form>
-                            </td>
-                            <td class="border border-slate-500 px-2 py-1 text-center">
-                                {{ $shipmentMethod->price }}
-                            </td>
-                            <td class="border border-slate-500 px-2 py-1 text-center">
-                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update === {{ $shipmentMethod->id }} ? update = null : update = {{ $shipmentMethod->id }}"></i>
-                                <form action="{{ route('shipment-method.destroy', $shipmentMethod) }}" method="POST" class="inline">
+                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update = !update" x-show="!update"></i>
+                                <form action="{{ route('shipment-method.destroy', $shipmentMethod) }}" method="POST" :class="{'hidden': update}">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" onclick="return confirm('are you sure?')">
+                                    <button type="submit" onclick="return confirm('are you sure?')" x-show="!update">
                                         <i class="fa-solid fa-trash cursor-pointer text-red-500"></i>
                                     </button>
                                 </form>
