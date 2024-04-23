@@ -11,17 +11,17 @@
  x-init="() => { setInterval(() => nextSlide(), 5000); }" class=" rounded-md h-80 w-full overflow-hidden relative border border-red-500">
 
     <div class="relative">
-        <div  class="absolute top-0 left-0 right-100" x-show="currentSlide === 0" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+        <div class="absolute top-0 left-0 right-100 bottom-0 bg-[url('{{ asset('img/placeholder.png') }}')] bg-f" x-show="currentSlide === 0" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
             <!-- Slide 1 -->
-            <img src="{{ asset('img/placeholder.png') }}" alt="Ad 1" class="w-full h-full object-none object-bottom ">
+            {{-- <img src="{{ asset('img/placeholder.png') }}" alt="Ad 1" class="object-fill"> --}}
         </div>
-        <div  class="absolute top-0 left-0 right-100" x-show="currentSlide === 1" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+        <div class="absolute top-0 left-0 right-100 bottom-0" x-show="currentSlide === 1" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
             <!-- Slide 2 -->
-            <img src="{{ asset('img/placeholder2.png') }}" alt="Ad 2" class="w-full h-full object-none object-bottom ">
+            <img src="{{ asset('img/placeholder2.png') }}" alt="Ad 2" class="object-fill">
         </div>
-        <div  class="absolute top-0 left-0 right-100" x-show="currentSlide === 2" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+        <div class="absolute top-0 left-0 right-100 bottom-0" x-show="currentSlide === 2" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
             <!-- Slide 3 -->
-            <img src="{{ asset('img/placeholder3.png') }}" alt="Ad 3" class="w-full h-full object-none object-bottom ">
+            <img src="{{ asset('img/placeholder3.png') }}" alt="Ad 3" class="object-fill">
         </div>
     </div>
 
