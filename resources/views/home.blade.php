@@ -21,11 +21,11 @@
             {{ $products->links() }}
         </div>
 
-        <div class="flex gap-3 mt-2 flex-wrap justify-around">
+        <div class="md:flex gap-2 mt-2 flex-wrap grid grid-cols-2 justify-around">
             @if (count($products) > 0)
                 @foreach ($products as $product)
-                    <div class="w-40 md:w-44 p-2 border border-slate-200 shadow-md rounded-2xl ">
-                        <div id="image-card" class="h-40 md:h-44 rounded-2xl overflow-hidden">
+                    <div class=" w-auto md:w-44 border border-slate-200 shadow-md rounded-xl mb-1 md:mb-2 ">
+                        <div id="image-card" class="h-40 md:h-44 rounded-t-xl overflow-hidden">
                             <a href="{{ route('home-product', $product) }}">
                                 <img src="{{ asset('storage/'. $product->product_picture) }}" class="w-full h-full" alt="{{ $product->product_name }}">
                             </a>

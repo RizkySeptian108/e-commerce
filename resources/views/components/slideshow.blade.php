@@ -1,37 +1,34 @@
 <div x-data="{
-    currentSlide: 0,
-    totalSlides: 3,
-    nextSlide() {
-        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+    currentSlide: 1,
+    totalSlide: 3,
+    nextSlide: function(){
+        this.currentSlide = this.currentSlide + 1 
+        if(this.currentSlide > this.totalSlide){
+            this.currentSlide = 1
+        }
     },
-    prevSlide() {
-        this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+    prevSlide: function(){
+        this.currentSlide = this.currentSlide - 1
+        if(this.currentSlide < 1){
+            this.currentSlide = this.totalSlide
+        }
     }
+}" 
+x-init="() => {
+    setInterval(() => {
+        let nextSlide = currentSlide + 1;
+        if (nextSlide > totalSlide) {
+            nextSlide = 1;
+        }
+        currentSlide = nextSlide;
+    }, 5000); // Change 5000 to the interval you desire in milliseconds
 }"
- x-init="() => { setInterval(() => nextSlide(), 5000); }" class=" rounded-md h-80 w-full overflow-hidden relative border border-red-500">
+class=" rounded-md h-80 w-full relative border flex flex-row overflow-hidden border-red-500">
+    <div class="absolute top-1/3 font-extrabold text-gray-300 text-6xl p-2 bg-gray-500 bg-opacity-50 cursor-pointer" x-on:click="prevSlide()"><i class="fa-solid fa-caret-left"></i></div>
 
-    <div class="relative">
-        <div class="absolute top-0 left-0 right-100 bottom-0 bg-[url('{{ asset('img/placeholder.png') }}')] bg-f" x-show="currentSlide === 0" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
-            <!-- Slide 1 -->
-            {{-- <img src="{{ asset('img/placeholder.png') }}" alt="Ad 1" class="object-fill"> --}}
-        </div>
-        <div class="absolute top-0 left-0 right-100 bottom-0" x-show="currentSlide === 1" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
-            <!-- Slide 2 -->
-            <img src="{{ asset('img/placeholder2.png') }}" alt="Ad 2" class="object-fill">
-        </div>
-        <div class="absolute top-0 left-0 right-100 bottom-0" x-show="currentSlide === 2" x-transition:enter="transform transition-transform ease-out duration-1000" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition-transform ease-in duration-1000" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
-            <!-- Slide 3 -->
-            <img src="{{ asset('img/placeholder3.png') }}" alt="Ad 3" class="object-fill">
-        </div>
-    </div>
+    <div class="bg-cover bg-center h-full transition-all ease-in-out" :class="currentSlide == 1 ? 'w-full' : 'w-0'" style="background-image: url('{{ asset('img/placeholder.png') }}')"></div>
+    <div class="bg-cover bg-center h-full transition-all ease-in-out" :class="currentSlide == 2 ? 'w-full' : 'w-0'" style="background-image: url('{{ asset('img/placeholder2.png') }}')" ></div>
+    <div class="bg-cover bg-center h-full transition-all ease-in-out" :class="currentSlide == 3 ? 'w-full' : 'w-0'" style="background-image: url('{{ asset('img/placeholder3.png') }}')"></div>
 
-    
-    <button @click="prevSlide" class="absolute top-32 left-0 text-white p-2 bg-gray-800 hover:bg-gray-700 text-3xl opacity-40 rounded-e-md">
-        <i class="fa-solid fa-angle-left"></i>
-    </button>
-    <button @click="nextSlide" class="absolute top-32 right-0 text-white p-2 bg-gray-800 hover:bg-gray-700 text-3xl opacity-40  rounded-s-md">
-        <i class="fa-solid fa-angle-right"></i>
-    </button>
-    
-
+    <div class="absolute top-1/3 right-0 font-extrabold text-gray-300 text-6xl p-2 bg-gray-500 bg-opacity-50 cursor-pointer" x-on:click="nextSlide()"><i class="fa-solid fa-caret-right"></i></div>
 </div>
