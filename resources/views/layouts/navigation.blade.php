@@ -1,4 +1,4 @@
-<nav x-data="{ open: false , search: false}" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky z-10 top-0 shadow grid grid-cols-12 py-3 px-3 md:px-16 items-center gap-3" >
+<nav x-data="{ open: false , search: false}" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky z-10 top-0 shadow grid grid-cols-12 py-3 px-3 md:px-16 items-center" >
     <!-- Primary Navigation Menu -->
     <div class="col-span-1 lg:col-span-3 md:col-span-2">
         <!-- Logo -->
@@ -13,7 +13,7 @@
     </div>
 
     {{-- search input bar --}}
-    <div class="flex flex-row md:block items-center gap-2 md:col-span-7 lg:col-span-6 transition-all" :class="{ 'col-span-11': search, 'col-span-7': !search }" x-cloak>
+    <div class="flex flex-row md:block items-center gap-2 md:w-full md:col-span-7 lg:col-span-6 transition-all" :class="{ 'w-full col-span-10': search, 'w-[98%] col-span-7': !search }" x-cloak>
         <form method="GET" action="{{ route('home') }}" class="relative flex-grow" >
             @csrf
             
@@ -25,13 +25,13 @@
                 <input type="hidden" name="kiosk" value="{{ request('kiosk') }}">
             @endif
 
-            <x-text-input name="search" placeholder="insert item name" @click="search = !search" class="w-full rounded-lg" />
+            <x-text-input name="search" placeholder="insert item name" @click.outside="search = false" @click="search = !search" class="w-full rounded-lg" />
             <button type="submit" class="absolute right-3 bottom-2"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
         </form>
     </div>
 
     {{-- Account informastion --}}
-    <div class="col-span-4 md:col-span-3 md:block flex justify-end" :class="{ 'hidden': search }">
+    <div class="md:col-span-3 md:block flex justify-end transition-all" :class="{ 'max-sm:opacity-0': search, 'col-span-4': !search }">
         @if (Auth::user())           
             <!-- Settings Dropdown -->
             <div class="flex flex-row items-center justify-end">
