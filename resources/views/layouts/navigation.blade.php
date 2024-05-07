@@ -164,7 +164,11 @@
         
     </div>
     <!-- Responsive Navigation Menu -->
-    <div x-show="open" x-cloak class="transition-all duration-200 flex" x-transition>
+    <div @if (Auth::user())
+        :class="{'h-48':open, 'h-0':!open}"
+    @else
+        :class="{'h-28':open, 'h-0':!open}"
+    @endif x-cloak class="flex overflow-hidden w-fit transition-all">
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
