@@ -2,7 +2,7 @@
 
 @section('main-page')
 <x-title class="mb-4">{{ $page_title }}</x-title>
-<div class="p-4 bg-white rounded-md">
+<div class="p-4 bg-white dark:bg-gray-500 rounded-md">
     <form action="{{ route('product.update', $product) }}" method="post" class="md:w-1/2" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -17,7 +17,7 @@
         {{-- Category --}}
         <div class="mt-4">
             <x-input-label for="category_id" :value="__('Select Category')" />
-            <select name="category_id" id="category_id" class="m-1 border-slate-300 rounded-md w-full">
+            <select name="category_id" id="category_id" class="m-1 rounded-md w-full dark:text-slate-300 dark:bg-slate-900">
                 <option value="" selected>-select category-</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" class="m-2" @if (old('category_id') === $category->id || $product->category_id === $category->id)
@@ -38,7 +38,7 @@
         {{-- Unit --}}
         <div class="mt-4">
             <x-input-label for="unit" :value="__('Unit')" />
-            <select name="unit" id="unit" class="m-1 border-slate-300 rounded-md w-full">
+            <select name="unit" id="unit" class="m-1 rounded-md w-full dark:text-slate-300 dark:bg-slate-900">
                 <option value="">-select unit-</option>
                 @foreach ($units as $unit)
                     <option 
@@ -64,7 +64,7 @@
         {{-- Product Description --}}
         <div class="mt-4">
             <x-input-label for="description" :value="__('Product Description')" />
-            <textarea name="description" id="description" cols="30" rows="2" class="mt-1 block w-full border border-slate-300 rounded-md" required>{{ old('description', $product->description) }}</textarea>
+            <textarea name="description" id="description" cols="30" rows="2" class="mt-1 block w-full border border-slate-300 dark:border-0 rounded-md dark:bg-gray-900 dark:text-slate-300" required>{{ old('description', $product->description) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('description')" />
         </div>
 

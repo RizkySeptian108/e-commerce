@@ -5,7 +5,8 @@
         {{ $page_title }}
     </x-title>
 
-    <div class="mt-4 w-full bg-white rounded-md p-3 inline-block">
+    <div class=""></div>
+    <div class="mt-4 w-full bg-white dark:bg-gray-500 rounded-md p-3 inline-block overflow-auto">
         @if (session('success'))
             <x-alert color="green">
                 {{ session('success') }}
@@ -37,11 +38,11 @@
         </div>
 
         <div class="mt-4">
-            <table class="border border-slate-500" >
+            <table class="border border-slate-500 dark:bg-slate-400" >
                 <thead>
                     <tr class="bg-slate-400 text-white font-semibold">
                         <th class="border border-slate-500 px-2 py-1 text-center">no</th>
-                        <th class="border border-slate-500 px-28 py-1">access type</th>
+                        <th class="border border-slate-500 px-2 py-1">access type</th>
                         <th class="border border-slate-500 px-2 py-1">action</th>
                     </tr>
                 </thead>
@@ -61,12 +62,12 @@
                                 </form>
                             </td>
                             <td class="border border-slate-500 px-2 py-1 text-center">
-                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update === {{ $a->id }} ? update = null : update = {{ $a->id }}"></i>
+                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500 dark:text-yellow-300" @click="update === {{ $a->id }} ? update = null : update = {{ $a->id }}"></i>
                                 <form action="{{ route('access.destroy', $a) }}" method="POST" class="inline">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" onclick="return confirm('are you sure?')">
-                                        <i class="fa-solid fa-trash cursor-pointer text-red-500"></i>
+                                        <i class="fa-solid fa-trash cursor-pointer text-red-500 dark:text-red-700"></i>
                                     </button>
                                 </form>
                             </td>
@@ -77,11 +78,11 @@
         </div>
 
         <div class="mt-4">
-            <h2 class="text-2xl font-semibold">Account Access</h2>
+            <h2 class="text-2xl font-semibold dark:text-slate-200">Account Access</h2>
             @error('access_id')  
                 <x-input-error :messages="$message" class="mt-2 "></x-input-error>
             @enderror
-            <table class="mt-2 border border-slate-500">
+            <table class="mt-2 border border-slate-500 dark:bg-slate-400 ">
                 <thead>
                     <tr class="bg-slate-400">
                         <th class="border border-slate-500 px-2 py-1">no</th>

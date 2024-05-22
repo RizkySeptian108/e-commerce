@@ -2,7 +2,7 @@
 
 @section('main-page')
     <div class="lg:px-12 px-3 py-2">
-        <h1 class="font-bold text-2xl uppercase">Order</h1>
+        <h1 class="font-bold text-2xl uppercase dark:text-white">Order</h1>
         <form action="{{ route('order.store') }}" method="POST"
             x-data="{
                 carts: {{ $carts }},
@@ -28,11 +28,11 @@
         >
             @csrf
             <div class="md:grid grid-cols-12 mt-4 gap-2">
-                <div class="col-span-8">
+                <div class="col-span-8 ">
                     {{-- Address and costumer detail start --}}
-                    <div class="bg-white p-4 rounded-t-xl shadow mb-4">
+                    <div class="bg-white p-4 rounded-t-xl shadow mb-4 dark:bg-gray-500 dark:text-slate-300">
                         <input type="hidden" name="address" id="address" value="{{ Auth::user()->address }}">
-                        <h3 class="opacity-50 font-bold text-sm">DELIVERY ADDRESS</h3>
+                        <h3 class="opacity-50 font-bold text-sm dark:text-slate-300 dark:opacity-100">DELIVERY ADDRESS</h3>
                         <p class="font-bold mt-2"><i class="fa-solid fa-location-dot text-green-600"></i> Home . <span>{{ Auth::user()->name }}</span></p>
                         <p class="text-sm">{{ Auth::user()->address }}</p>
                     </div>
@@ -52,7 +52,7 @@
                     {{-- shipment input error message end --}}
 
                     {{-- Loop the carts --}}
-                    <div class="bg-white shadow p-2 max-w-full">
+                    <div class="bg-white dark:bg-gray-500 shadow p-2 max-w-full dark:text-slate-300">
                         <template x-for="(cart, index) in carts">
                             <div x-data="{
                                 totalPerOrder: function(items){
@@ -111,10 +111,10 @@
                                                 {{-- showing shipment that are chosen end --}}
                 
                                             </div>
-                                            <div class="border border-slate-300 p-2 rounded-md mt-2 absolute bottom-12 w-full bg-white" x-show="open === true" x-transition>
+                                            <div class="border border-slate-300 p-2 rounded-md mt-2 absolute bottom-12 w-full bg-white dark:bg-slate-400" x-show="open === true" x-transition>
                                                 {{-- looping the shipment methods start --}}
                                                 <template x-for="shipment in shipments">
-                                                    <div class="flex justify-between cursor-pointer px-2 py-1 hover:bg-slate-200 rounded-md" x-on:click="changeShipment(index, shipment.price, shipment.shipment_method, shipment.id)">
+                                                    <div class="flex justify-between cursor-pointer px-2 py-1 hover:bg-slate-200 dark:text-slate-100 dark:hover:text-slate-800 rounded-md" x-on:click="changeShipment(index, shipment.price, shipment.shipment_method, shipment.id)">
                                                         <span x-text="shipment.shipment_method" class="uppercase font-bold text-sm"></span>
                                                         <span class="text-sm" x-text="shipment.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })"></span>
                                                     </div>
@@ -133,7 +133,7 @@
                 
                 {{-- Shopping Summary --}}
                 <div class="col-span-4 max-sm:sticky bottom-0 max-sm:mt-2">
-                    <div class="w-full bg-white p-4 rounded-lg shadow">
+                    <div class="w-full bg-white dark:bg-gray-500 p-4 rounded-lg shadow dark:text-slate-300">
                         <h3 class="font-bold text-lg text-center">Shopping summary</h3>
 
                         {{-- total price --}}
@@ -156,7 +156,7 @@
                         
 
                         <input type="hidden" name="total_price" :value="totalPrice()">
-                        <select name="payment_method" id="payment_method" class="mt-4 w-full rounded-md border-slate-400">
+                        <select name="payment_method" id="payment_method" class="mt-4 w-full rounded-md border-slate-400 dark:bg-slate-700">
                             <option value="">select payment method</option>
                             @foreach ($paymentMethods as $paymentMethod)
                                 <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->payment_method }}</option>

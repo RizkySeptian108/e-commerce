@@ -5,7 +5,7 @@
         {{ $page_title }}
     </x-title>
 
-    <div class="mt-4 w-full bg-white rounded-md p-3 inline-block">
+    <div class="mt-4 w-full bg-white dark:bg-gray-500 rounded-md p-3 inline-block">
         @if (session('success'))
             <x-alert color="green">
                 {{ session('success') }}
@@ -38,7 +38,7 @@
         </div>
 
         <div class="mt-4">
-            <table class="border border-slate-500" >
+            <table class="border border-slate-500 dark:bg-slate-400" >
                 <thead>
                     <tr class="bg-slate-400 text-white font-semibold">
                         <th class="border border-slate-500 py-1 text-center">no</th>
@@ -63,7 +63,7 @@
                                 </span>
                                 <input type="number" name="price"  class="p-1 w-20 rounded-md border-slate-400 focus:ring-blue-200" x-model="price" x-show="update" x-cloak>
                             </td>
-                            <td class="border border-slate-500 px-2 py-1 text-center">
+                            <td class="border border-slate-500 px-2 py-1 text-center flex">
                                 <form action="{{ route('shipment-method.update', $shipmentMethod) }}" method="POST" x-cloak>
                                     @csrf
                                     @method('PUT')
@@ -72,12 +72,12 @@
                                     <x-primary-button x-show="update">submit</x-primary-button>
                                     <i class="fa-solid fa-xmark text-red-600 cursor-pointer" @click="update = !update" x-show="update"></i>
                                 </form>
-                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update = !update" x-show="!update"></i>
+                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500 dark:text-yellow-300" @click="update = !update" x-show="!update"></i>
                                 <form action="{{ route('shipment-method.destroy', $shipmentMethod) }}" method="POST" :class="{'hidden': update}">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" onclick="return confirm('are you sure?')" x-show="!update">
-                                        <i class="fa-solid fa-trash cursor-pointer text-red-500"></i>
+                                        <i class="fa-solid fa-trash cursor-pointer text-red-500 dark:text-red-700"></i>
                                     </button>
                                 </form>
                             </td>

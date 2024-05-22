@@ -4,7 +4,7 @@
     <x-title>
         Orders
     </x-title>
-    <div class="mt-4 p-4 bg-white rounded-md">
+    <div class="mt-4 p-4 bg-white dark:bg-gray-500 rounded-md">
         {{-- Filter --}}
 
         @if (session('not_confirm'))
@@ -20,10 +20,11 @@
         @endif
         @foreach ($orders as $order)    
         <div class="flex flex-col gap-2">
-            <div class="rounded-lg shadow">
-                <div class="flex gap-2 items-center w-full p-2 bg-gray-200 rounded-t-lg ">
-                    <p class="font-bold">{{ $order->user->name }}</p>
-                    <p class="text-sm font-light">{{ $order->created_at->format('d M Y') }}</p>
+            <div class="rounded-lg shadow dark:bg-gray-700 dark:text-slate-200
+            ">
+                <div class="flex gap-2 items-center w-full p-2 bg-gray-200 dark:bg-gray-400 rounded-t-lg ">
+                    <p class="font-bold dark:text-slate-800">{{ $order->user->name }}</p>
+                    <p class="text-sm font-light dark:text-slate-800">{{ $order->created_at->format('d M Y') }}</p>
                 </div>
                 <div class="flex flex-col md:flex-row p-2 w-full gap-2 justify-between">
                     <div class="flex gap-2 flex-col">
@@ -62,7 +63,7 @@
                         @if (!$order->is_confirm)
                             class="rounded-md bg-green-700 shadow p-1 text-white uppercase font-bold"
                         @else
-                            class="rounded-md bg-slate-200 shadow p-1 text-black uppercase font-bold hover:cursor-not-allowed"
+                            class="rounded-md bg-slate-200 shadow p-1 text-black uppercase font-bold hover:cursor-not-allowed" @disabled(true)
                         @endif
                         >Confirm</button>
                     </form>
@@ -73,7 +74,7 @@
                         @if (!$order->is_packed)
                             class="rounded-md bg-blue-700 shadow p-1 text-white uppercase font-bold"
                         @else
-                            class="rounded-md bg-slate-200 shadow p-1 text-black uppercase font-bold hover:cursor-not-allowed"
+                            class="rounded-md bg-slate-200 shadow p-1 text-black uppercase font-bold hover:cursor-not-allowed" @disabled(true)
                         @endif
                         >Deliver</button>
                     </form>

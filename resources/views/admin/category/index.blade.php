@@ -5,7 +5,7 @@
         {{ $page_title }}
     </h2>
 
-    <div class="mt-4 w-full bg-white rounded-md p-3 inline-block">
+    <div class="mt-4 w-full bg-white dark:bg-gray-500 rounded-md p-3 inline-block">
         @if (session('success'))
             <x-alert color="green">
                 {{ session('success') }}
@@ -37,7 +37,7 @@
         </div>
 
         <div class="mt-4">
-            <table class="border border-slate-500 w-full" >
+            <table class="border border-slate-500 dark:bg-slate-400 w-full" >
                 <thead>
                     <tr class="bg-slate-400 text-white font-semibold">
                         <th class="border border-slate-500 px-2 py-1 text-center">no</th>
@@ -61,12 +61,12 @@
                                 </form>
                             </td>
                             <td class="border border-slate-500 px-2 py-1 text-center">
-                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500" @click="update === {{ $category->id }} ? update = null : update = {{ $category->id }}"></i>
+                                <i class="fa-solid fa-pen-to-square mr-2 cursor-pointer text-yellow-500 dark:text-yellow-300" @click="update === {{ $category->id }} ? update = null : update = {{ $category->id }}"></i>
                                 <form action="{{ route('category.destroy', $category) }}" method="POST" class="inline">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" onclick="return confirm('are you sure?')">
-                                        <i class="fa-solid fa-trash cursor-pointer text-red-500"></i>
+                                        <i class="fa-solid fa-trash cursor-pointer text-red-500 dark:text-red-700"></i>
                                     </button>
                                 </form>
                             </td>

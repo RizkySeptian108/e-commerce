@@ -4,7 +4,7 @@
     <x-title class="mb-4">
         {{ $page_title }}
     </x-title>
-    <div class="bg-white rounded-md p-4 w-full">
+    <div class="bg-whit dark:bg-gray-500 rounded-md p-4 w-full">
         @if (session('success'))
             <x-alert color="green">{{ session('success') }}</x-alert>
         @endif
@@ -13,7 +13,7 @@
             {{-- Search product --}}
             <form method="GET" action="{{ route('product.index') }}" class="relative">
                 <x-text-input placeholder="search your product" class="w-full rounded-3xl" name="product_name" />
-                <button type="submit" class="absolute right-3 bottom-2"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
+                <button type="submit" class="absolute right-3 bottom-2 dark:text-slate-300"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
             </form>
 
             {{-- add button --}}
@@ -30,12 +30,12 @@
 
         <div class="grid grid-cols-10 mt-2 gap-2 w-full">
             @foreach ($products as $product)    
-            <div class="col-span-10 md:col-span-5 flex gap-2 w-full flex-col justify-between p-2 rounded-md border shadow">
+            <div class="col-span-10 md:col-span-5 flex gap-2 w-full flex-col justify-between p-2 rounded-md border shadow dark:text-slate-200 dark:bg-gray-700">
                 {{-- Product Picture --}}
                 <div class="flex w-full gap-2">
                     <img src="{{ asset('storage/' . $product->product_picture) }}" alt="{{ $product->product_name }}" class="m-auto w-1/4">
                     <div class="flex gap-1 flex-col w-3/4">
-                        <p class="text-green-600 font-bold text-lg">{{ $product->product_name }}</p>
+                        <p class="text-green-600 dark:text-lime-300 font-bold text-lg">{{ $product->product_name }}</p>
                         <p class="text-xs font-bold">{{ $product->qty }}</p>
                         <p class="text-xs font-bold">Rp. {{ number_format($product->price_per_unit) }}</p>
                     </div>

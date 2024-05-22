@@ -3,7 +3,7 @@
 @section('main-page')
 
     <div class="py-3 lg:px-12 w-full p-2">
-        <h1 class="font-bold text-2xl uppercase">Cart</h1>
+        <h1 class="font-bold text-2xl uppercase dark:text-white">Cart</h1>
 
         @if($errors->any())
             {{-- <x-alert color="red">
@@ -51,11 +51,11 @@
                 } --}}
                 return items
             }
-        }">
+        }" >
             <div class="lg:grid grid-cols-12 mt-4 gap-2">
-                <div class="col-span-9">
+                <div class="col-span-9 bg-white rounded-lg dark:bg-gray-500 dark:text-slate-300">
                     {{-- Check all button --}}
-                    <div class="bg-white p-4 rounded-t-xl shadow">
+                    <div class="p-4 shadow">
                         <input type="checkbox" class="mr-2 rounded-md w-5 h-5" id="check_all" 
                         x-on:change="allChecked = !allChecked; checked()" x-bind:checked=" isAllChecked()">
                         <span class="font-extrabold">Check all</span>
@@ -63,7 +63,7 @@
                     @csrf
                     <template x-if="carts.length > 0">
                         <template x-for="(cart, indexKiosk) in carts">
-                            <div class="border-b p-4 bg-white shadow" 
+                            <div class="p-4 shadow" 
                                 x-data="{
                                     isItemCheckedFunc: function(){
                                         cart.items.forEach(function(item){
@@ -127,21 +127,21 @@
                                         <div class="mt-1 flex justify-end items-center gap-2">
                                             <form :action="'cart/cart-delete/' + item.id" method="POST">
                                                 @csrf
-                                                <button class="mr-4 text-slate-600 cursor-pointer" ><i class="fa-solid fa-trash-can"></i></button>
+                                                <button class="mr-4 text-slate-600 dark:text-slate-300 cursor-pointer" ><i class="fa-solid fa-trash-can"></i></button>
                                             </form>
                                             <span class="inline-block">Stock: <span x-text="item.product.qty"></span></span>
                                             <div class="flex gap-2 border rounded-xl border-slate-300 px-2 py-1 w-fit focus:outline-none">
-                                                <button type="button" x-on:click="item.qty <= 1 ? '' : item.qty-- " ><i class="fa-solid fa-minus"></i></button>
+                                                <button class="px-1 rounded-xl dark:hover:bg-slate-400 dark:hover:text-slate-900" type="button" x-on:click="item.qty <= 1 ? '' : item.qty-- " ><i class="fa-solid fa-minus"></i></button>
                                                 <input 
                                                 type="number" 
                                                 readonly  
                                                 min="0" 
                                                 :name="'orders['+indexKiosk+'][items]['+indexItem+'][qty]'" 
                                                 x-model="item.qty" 
-                                                class="w-10 p-0 text-center border-none [&::-webkit-inner-spin-button]:appearance-none border-transparent focus:border-transparent focus:ring-0" 
+                                                class="w-10 p-0 text-center border-none dark:text-black [&::-webkit-inner-spin-button]:appearance-none border-transparent focus:border-transparent focus:ring-0 rounded-md" 
                                                 x-bind:disabled="!item.isItemChecked"
                                                 >
-                                                <button type="button" x-on:click="item.qty >= max ? '' : item.qty++" ><i class="fa-solid fa-plus"></i></button>
+                                                <button class="px-1 rounded-xl dark:hover:bg-slate-400 dark:hover:text-slate-900" type="button" x-on:click="item.qty >= max ? '' : item.qty++" ><i class="fa-solid fa-plus"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -160,14 +160,14 @@
                 </div>
 
                 {{-- Shopping summary --}}
-                <div class="col-span-3 sticky bottom-0 lg:static w-full max-sm:mt-4">
-                    <div class="w-full bg-white p-4 rounded-lg shadow">
+                <div class="col-span-3 sticky bottom-0 lg:static w-full max-sm:mt-4 dark:text-slate-300">
+                    <div class="w-full bg-white p-4 rounded-lg shadow dark:bg-gray-500">
                         <h3 class="font-bold text-lg text-center">Shopping summary</h3>
                         <div class="flex justify-between mt-2 items-center">
                             <span class="text-sm flex justify-between w-full items-center">Total : <span class="text-lg" x-text="total().toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 2, })"></span></span>
                         </div>
                         <input type="hidden" x-bind:value="total()" name="total">
-                        <x-primary-button class="mt-2 w-full">Buy</x-primary-button>
+                        <x-primary-button class="mt-2 w-full ">Buy</x-primary-button>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@
         <!-- Logo -->
         <div class="shrink-0 w-full flex">
             <a href="/" class="text-lg text-slate-600 md:hidden">
-                <i class="fa-solid fa-house block w-full"></i>
+                <i class="fa-solid fa-house block w-full dark:text-slate-400"></i>
             </a>
             <a href="{{ route('home') }}" class="hidden md:block">
                 <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
@@ -26,12 +26,12 @@
             @endif
 
             <x-text-input name="search" placeholder="insert item name" @click.outside="search = false" @click="search = !search" class="w-full rounded-lg" />
-            <button type="submit" class="absolute right-3 bottom-2"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
+            <button type="submit" class="absolute right-3 bottom-2 dark:text-slate-400"><i class="fa-solid fa-magnifying-glass w-full"></i></button>
         </form>
     </div>
 
-    {{-- Account informastion --}}
-    <div class="md:col-span-3 md:block flex justify-end transition-all" :class="{ 'max-sm:opacity-0': search, 'col-span-4': !search }">
+    {{-- Account information --}}
+    <div class="md:col-span-3 md:block flex justify-end transition-all dark:text-slate-300" :class="{ 'max-sm:opacity-0': search, 'col-span-4': !search }">
         @if (Auth::user())           
             <!-- Settings Dropdown -->
             <div class="flex flex-row items-center justify-end">
@@ -41,7 +41,7 @@
                     <x-dropdown width="w-80" dropdownClass="max-sm:-right-16">
                         <x-slot name="trigger">
                             <button class="text-slate-600 relative mr-4">
-                                <i class="fa-solid fa-box-open"></i>
+                                <i class="fa-solid fa-box-open dark:text-slate-400"></i>
                                 <p class="bg-red-600 text-sm text-white rounded-md text-[12px] absolute w-fit px-1 -bottom-2 left-3" x-show="orders.length > 0" x-text="orders.length"></p>
                             </button>
                         </x-slot>
@@ -71,7 +71,7 @@
                     <x-dropdown align="rigth" width="w-80" dropdownClass="max-sm:-right-8">
                         <x-slot name="trigger">
                             <button class="text-slate-600 relative mr-4">
-                                <i class="fa-solid fa-cart-shopping"></i>
+                                <i class="fa-solid fa-cart-shopping dark:text-slate-400"></i>
                                 <p class="bg-red-600 text-sm text-white rounded-md text-[12px] absolute w-fit px-1 -bottom-2 left-3" x-show="carts.length > 0" x-text="carts.length"></p>
                             </button>
                         </x-slot>
@@ -147,14 +147,14 @@
             </div>
         @else
             <div class="md:flex justify-end gap-2 hidden">
-                <a href="{{ route('login') }}" class="inline-flex items-center px-2 py-1 md:px-4 md:py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest  transition ease-in-out duration-150">Login</a>
-                <a href="{{ route('register') }}" class="inline-flex items-center px-2 py-1 md:px-4 md:py-2 border border-slate-800 rounded-md font-semibold text-xs uppercase tracking-widest transition ease-in-out duration-150">Register</a>
+                <a href="{{ route('login') }}" class="inline-flex items-center px-2 py-1 md:px-4 md:py-2 bg-gray-800 dark:bg-slate-600 dark:text-slate-300 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest transition ease-in-out duration-150">Login</a>
+                <a href="{{ route('register') }}" class="inline-flex dark:bg-slate-600 items-center px-2 py-1 md:px-4 md:py-2 border border-slate-800 rounded-md font-semibold text-xs uppercase tracking-widest transition ease-in-out duration-150">Register</a>
             </div>
         @endif
     
     <!-- Hamburger -->
     <div class="flex justify-end md:hidden items-center">
-        <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+        <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-400 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                 <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
