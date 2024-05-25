@@ -121,11 +121,16 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('address.index')">
+                            {{ __('Address Setting') }}
+                        </x-dropdown-link>
+                        
                         @if (isset(Auth::user()->kiosk))
                             <x-dropdown-link :href="route('dashboard')">
                                 {{ __('Your Kiosk') }}
                             </x-dropdown-link>
                         @else
+
                         <x-dropdown-link :href="route('kiosk.create')">
                             {{ __('Create Kiosk') }}
                         </x-dropdown-link>

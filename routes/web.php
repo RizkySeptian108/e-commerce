@@ -3,6 +3,7 @@
 use App\Models\Access;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
@@ -34,8 +35,6 @@ Route::get('/home/{product}', [HomeController::class, 'product'])->name('home-pr
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-// 
-
 // Admin
 Route::middleware('auth', 'verified', 'isAdmin')->group(function() {
     Route::resource('/category', CategoryController::class);
@@ -50,13 +49,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    
     Route::middleware('verified')->group(function() {
         // create a kiosk
         Route::resource('/kiosk', KioskController::class)->only('create','store');
-
+        
         // Order route
         Route::resource('/order', OrderController::class)->only('create', 'store');
+
+        // Address
+        Route::resource('/address', AddressController::class);
     });
 
     // create data in cart
