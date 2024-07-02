@@ -33,8 +33,21 @@
                     <div class="bg-white p-4 rounded-t-xl shadow mb-4 dark:bg-gray-500 dark:text-slate-300">
                         <input type="hidden" name="address" id="address" value="{{ Auth::user()->address }}">
                         <h3 class="opacity-50 font-bold text-sm dark:text-slate-300 dark:opacity-100">DELIVERY ADDRESS</h3>
-                        <p class="font-bold mt-2"><i class="fa-solid fa-location-dot text-green-600"></i> Home . <span>{{ Auth::user()->name }}</span></p>
-                        <p class="text-sm">{{ Auth::user()->address }}</p>
+
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-green-600"></i>
+                            <select name="" id="" class="rounded-lg py-1 bg-slate-500 border border-slate-300 w-full ">
+                                @foreach ($addresses as $address)
+                                <option value="" class="w-full" @if ($address->is_main)
+                                selected                                    
+                                @endif>
+                                    <p class="font-bold mt-2">{{ $address->address_label }} : </span></p>
+                                    <p class="text-sm">{{ $address->full_address }}</p>
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    
                     </div>
                     {{-- Address and costumer detail start --}}
 

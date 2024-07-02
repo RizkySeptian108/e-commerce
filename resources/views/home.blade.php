@@ -32,10 +32,10 @@
                         </div>
                         <div id="body-card " class="p-1">
                             <a class="" href="{{ route('home-product', $product) }}">
-                                <h3 class="font-light text-sm text-lime-300 p-1 rounded-md dark:hover:bg-gray-900" dark:hover:border-l-lime-400 >{{ $product->product_name }}</h3>
+                                <h3 class="font-light text-sm dark:text-lime-300 p-1 rounded-md dark:hover:bg-gray-900" dark:hover:border-l-lime-400 >{{ $product->product_name }}</h3>
                             </a>
-                            <h3 class="font-extrabold text-lg text-slate-200">Rp. {{ number_format($product->price_per_unit) }}</h3>
-                            <a class="flex text-slate-300 gap-1 items-center p-1 shadow border border-slate-200 rounded-md cursor-pointer mt-1 dark:hover:bg-slate-200 dark:hover:text-slate-800" href="{{ route('home', ['kiosk' => $product->kiosk_id]) }}" >
+                            <h3 class="font-extrabold text-lg dark:text-slate-200">Rp. {{ number_format($product->price_per_unit) }}</h3>
+                            <a class="flex dark:text-slate-300 gap-1 items-center p-1 shadow border border-slate-200 rounded-md cursor-pointer mt-1 dark:hover:bg-slate-200 dark:hover:text-slate-800" href="{{ route('home', ['kiosk' => $product->kiosk_id]) }}" >
                                 <img 
                                     src="{{ asset('storage/'. $product->kiosk->kiosk_logo) }}" 
                                     alt="{{ $product->kiosk->kiosk_name }}"

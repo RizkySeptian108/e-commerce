@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\PaymentMethod;
 use App\Models\ShipmentMethod;
 use App\Http\Requests\OrderRequest;
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -33,6 +34,8 @@ class OrderController extends Controller
     public function create(OrderRequest $request)
     {
         $carts = [];
+
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
         
         $cart = [
             'kiosk' => [
@@ -77,7 +80,8 @@ class OrderController extends Controller
             'carts' => $carts,
             'shipments' => $shipments,
             'totalItems' => $request->total,
-            'paymentMethods' => $paymentMethods
+            'paymentMethods' => $paymentMethods,
+            'addresses' => $addresses
         ]);
     }
 

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main-page')
-    <div class="bg-white rounded-md p-4 dark:bg-gray-500">
+    <div class="bg-white dark:text-slate-300 rounded-md p-4 dark:bg-gray-500">
         <x-title>{{ $page_title }} : {{ $product->product_name }}</x-title>
 
         <div class="md:grid grid-cols-12 mt-4">
@@ -39,14 +39,14 @@
 
             {{-- Quantity & price section --}}
             <div class="col-span-3 p-1 md:static sticky bottom-0 bg-white dark:bg-gray-500">
-                <div class="border border-green-700 dark: rounded-md p-1">
+                <div class="border border-green-700 dark:border-lime-400 dark: rounded-md p-1">
                     <h1 class="font-extrabold text-lg text-center">Set quantity</h1>
                     <form action="{{ route('cart.store', ['product' => $product]) }}" class="p-1" x-data="{qty: 1, max: {{ $product->qty }}}" method="POST">
                         @csrf
                         <div class="flex gap-3 items-center justify-between">
                             <div class=" flex gap-2 border rounded-xl border-slate-300 px-2 py-1 w-fit focus:outline-none">
                                 <button class="px-1 rounded-xl dark:hover:bg-slate-400 dark:hover:text-slate-200" type="button" x-on:click="qty <= 1 ? '' : qty-- " ><i class="fa-solid fa-minus"></i></button>
-                                <input type="number" readonly  min="0" name="qty" x-model="qty"  class="w-10 p-0 dark:rounded-lg text-center border-none [&::-webkit-inner-spin-button]:appearance-none border-transparent focus:border-transparent focus:ring-0" id="">
+                                <input type="number" readonly  min="0" name="qty" x-model="qty"  class="w-10 p-0 dark:text-slate-800 dark:rounded-lg text-center border-none [&::-webkit-inner-spin-button]:appearance-none border-transparent focus:border-transparent focus:ring-0" id="">
                                 <button class="px-1 rounded-xl dark:hover:bg-slate-400 dark:hover:text-slate-200" type="button" x-on:click="qty >= max ? '' : qty++" ><i class="fa-solid fa-plus"></i></button>
                             </div>
                             <p><span class="font-semibold text-orange-400">Total stock</span>: {{ $product->qty }}</p>

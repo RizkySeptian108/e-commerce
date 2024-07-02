@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/order', OrderController::class)->only('create', 'store');
 
         // Address
+        Route::get('/address/status/{address:id}', [AddressController::class, 'status'])->name('address.status');
         Route::resource('/address', AddressController::class);
     });
 
